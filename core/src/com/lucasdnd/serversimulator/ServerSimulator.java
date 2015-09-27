@@ -73,7 +73,8 @@ public class ServerSimulator extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		font.drawWhiteFont("Hello, world!", 0f, Gdx.graphics.getHeight() / 2f, true, Align.center, Gdx.graphics.getWidth());
+		// UI Render
+		sideBar.render(uiShapeRenderer);
 	}
 	
 	public InputHandler getInputHandler() {
