@@ -60,4 +60,13 @@ public class FontUtils {
 		Resources.get().greenFont.draw(fontBatch, text, x, y, space, align, false);
 		fontBatch.end();
 	}
+	
+	public void drawBlackFont(String text, float x, float y, boolean withShadow) {
+		fontBatch.begin();
+		if (withShadow) {
+			Resources.get().grayFont.draw(fontBatch, text, x + 1f, y - 1f);
+		}
+		Resources.get().blackFont.draw(fontBatch, text, x, y);
+		fontBatch.end();
+	}
 }

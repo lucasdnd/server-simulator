@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.serversimulator.FontUtils;
+import com.lucasdnd.serversimulator.Resources;
 import com.lucasdnd.serversimulator.ServerSimulator;
 
 public class SideBar {
@@ -16,7 +17,7 @@ public class SideBar {
 	// Status bar attributes
 	private float barHeight;
 	private float barWidth;
-		
+	
 	// Main Buttons
 	private Button newGameButton, saveGameButton, loadGameButton, quitButton;
 	
@@ -26,7 +27,7 @@ public class SideBar {
 		this.x = x;
 		this.y = y;
 		barHeight = margin * 1.8f;
-		barWidth = SIDEBAR_WIDTH - margin * 2;
+		barWidth = SIDEBAR_WIDTH;
 		font = new FontUtils();
 		
 		// Buttons
@@ -53,31 +54,30 @@ public class SideBar {
 		sr.rect(x, y, SIDEBAR_WIDTH, height);
 		sr.end();
 		
-		// Status bars
-//		Player player = ((ServerSimulator)Gdx.app.getApplicationListener()).getPlayer();
-//		
-//		drawRectFill(sr, null, x + margin, height - margin,       barWidth, barHeight, player.getHealth(),  Player.MAX_STAT_VALUE);
-//		drawRectFill(sr, null, x + margin, height - margin * 5,   barWidth, barHeight, player.getCold(), Player.MAX_STAT_VALUE);
-//		drawRectFill(sr, null, x + margin, height - margin * 9,   barWidth, barHeight, player.getHunger(),    Player.MAX_STAT_VALUE);
-//		drawRectFill(sr, null, x + margin, height - margin * 13,  barWidth, barHeight, player.getThirst(),   Player.MAX_STAT_VALUE);
+		// Player stuff
+		font.drawWhiteFont("$",  x + margin, height - margin, true);
+		font.drawWhiteFont("Service price: ", x + margin, height - margin * 3, true);
+		font.drawWhiteFont("Expenses: ",  x + margin, height - margin * 5, true);
 		
-		drawRectFrame(sr, x + margin, height - margin,      barWidth, barHeight);
-		drawRectFrame(sr, x + margin, height - margin * 5,  barWidth, barHeight);
-		drawRectFrame(sr, x + margin, height - margin * 9,  barWidth, barHeight);
-		drawRectFrame(sr, x + margin, height - margin * 13, barWidth, barHeight);
+		// Software
+		drawBackgroundBar(sr, x, height - margin * 8, barWidth, barHeight - 12f);
+		font.drawBlackFont("Software",  x + margin, height - margin * 7, true);
 		
-		// UI Text
-		font.drawWhiteFont("Health",  x + margin, height - margin * 3, true);
-		font.drawWhiteFont("Cold",    x + margin, height - margin * 7, true);
-		font.drawWhiteFont("Hunger",  x + margin, height - margin * 11, true);
-		font.drawWhiteFont("Thirst",  x + margin, height - margin * 15, true);
+		// Hardware
+		drawBackgroundBar(sr, x, height - margin * 16, barWidth, barHeight - 12f);
+		font.drawBlackFont("Hardware",  x + margin, height - margin * 15, true);
 		
-		// Instructions
-		font.drawWhiteFont("E: harvest/collect",        x + margin, height - margin * 25 - 3f, true);
-		font.drawWhiteFont("W: use selected item",      x + margin, height - margin * 26 - 3f, true);
-		font.drawWhiteFont("+/-: zoom",                 x + margin, height - margin * 27 - 3f, true);
-		font.drawWhiteFont("Hold shift to look around", x + margin, height - margin * 28 - 3f, true);
-		font.drawWhiteFont("Hold ctrl to strafe",       x + margin, height - margin * 29 - 3f, true);
+		// Status
+		drawBackgroundBar(sr, x, height - margin * 21, barWidth, barHeight - 12f);
+		font.drawBlackFont("Status",  x + margin, height - margin * 20, true);
+		
+		font.drawWhiteFont("Request time:",  x + margin, height - margin * 22, true);
+		font.drawWhiteFont("I/O time:",  x + margin, height - margin * 24, true);
+		font.drawWhiteFont("Response time:",  x + margin, height - margin * 26, true);
+		
+		font.drawWhiteFont("Servers:",  x + margin * 12, height - margin * 22, true);
+		font.drawWhiteFont("Threads:",  x + margin * 12, height - margin * 24, true);
+		font.drawWhiteFont("Bugs:",  x + margin * 12, height - margin * 26, true);
 		
 		// New, save, load, quit
 		newGameButton.render();
@@ -88,13 +88,13 @@ public class SideBar {
 		// Game name and version
 		font.drawWhiteFont(ServerSimulator.GAME_NAME, x + margin,                  margin * 1.5f, true);
 		font.drawWhiteFont(ServerSimulator.VERSION,   x + SIDEBAR_WIDTH - margin * 4 - 6f, margin * 1.5f, true);
-		
-		// Inventory, crafting and result
-		// (should be rendered last so the items you hold on the mouse won't go behind things) 
-		font.drawWhiteFont("Inventory", x + margin,      height - margin * 23 - 3f, true);
-		font.drawWhiteFont("Crafting",  x + margin * 13, height - margin * 19 - 3f, true);
-		font.drawWhiteFont("Result",    x + margin * 13, height - margin * 23 - 3f, true);
-//		player.getInventory().render(sr);
+	}
+	
+	private void drawBackgroundBar(ShapeRenderer sr, float x, float y, float width, float height) {
+		sr.begin(ShapeType.Filled);
+		sr.setColor(Color.WHITE);
+		sr.rect(x, y, width, height);
+		sr.end();
 	}
 	
 	private void drawRectFrame(ShapeRenderer sr, float x, float y, float width, float height) {
