@@ -10,31 +10,45 @@ public class Thread {
 	private int id;
 	private float x, y;
 	private float requestWidth, ioWidth, responseWidth;
-	private float height;
-	ShapeRenderer sr;
+	private final float height = ServerSimulator.BLOCK_SIZE;
+	private final float serverOffsetY = ServerSimulator.BLOCK_SIZE * 2f;
+	private ShapeRenderer sr;
 	
 	private Request request;
 	
 	public Thread(int id) {
 		this.id = id;
 		sr = new ShapeRenderer();
-		height = ServerSimulator.BLOCK_SIZE;
 	}
 	
-	public void update() {
+	public void update(float serverY) {
 		if (request != null) {
 			request.update();
 		}
+		
+		float b = ServerSimulator.BLOCK_SIZE;
+		y = serverY - (id * b * 2f) - serverOffsetY;
+		
+		requestWidth = b * 32f;
+		ioWidth = b * 32f;
+		responseWidth = b * 14f;
 	}
 	
-	public void render() {
+	public void render(float serverY) {
 		sr.begin(ShapeType.Filled);
-		sr.setColor(Color.LIGHT_GRAY);
-
+		
 		// Request line
+		sr.setColor(Color.GOLD);
 		sr.rect(x, y, requestWidth, height);
-		sr.rect(x, y, ioWidth, height);
-		sr.rect(x, y, responseWidth, height);
+		
+		// I/O line
+		sr.setColor(Color.CYAN);
+		sr.rect(requestWidth, y, ioWidth, height);
+		
+		// Response line
+		sr.setColor(Color.CORAL);
+		sr.rect(requestWidth + ioWidth, y, responseWidth, height);
+		
 		sr.end();
 	}
 

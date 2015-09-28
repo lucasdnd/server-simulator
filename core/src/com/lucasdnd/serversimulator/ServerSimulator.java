@@ -14,7 +14,7 @@ public class ServerSimulator extends ApplicationAdapter {
 	// General stuff
 	public static final String GAME_NAME = "Server Simulator";
 	public static final String VERSION = "v0.1.0";
-	private boolean debug = false;
+	private boolean debug = true;
 	
 	// Rendering, font
 	public static final float BLOCK_SIZE = 8f;

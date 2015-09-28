@@ -22,20 +22,31 @@ public class Server {
 	private ArrayList<Thread> threads;
 	
 	public Server(Software software, int id) {
+		
 		this.id = id;
 		sr = new ShapeRenderer();
+		
 		threads = new ArrayList<Thread>();
 		for (int i = 0; i < software.getOptimization() + 1; i++) {
 			addNewThread();
 		}
-	}
-	
-	public void update() {
-		height = 88f;
-		width = height;
+		
+		// Drawing stuff
+		height = 96f;
 		x = (Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH) / 2f - (width / 2f);
 		float offsetY = 32f;
 		y = Gdx.graphics.getHeight() - offsetY - (height * id + (offsetY * id));
+	}
+	
+	public void update() {
+		
+		// Drawing stuff
+		width = height;
+		
+		// Threads
+		for (Thread t : threads) {
+			t.update(y);
+		}
 	}
 	
 	public void render() {
@@ -43,7 +54,7 @@ public class Server {
 		drawRectFrame();
 		
 		for (Thread t : threads) {
-			t.render();
+			t.render(y);
 		}
 	}
 	
