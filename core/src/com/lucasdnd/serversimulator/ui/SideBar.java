@@ -102,9 +102,9 @@ public class SideBar {
 		// Status
 		drawBackgroundBar(sr, x, height - margin * 20, barWidth, barHeight - 12f);
 		font.drawBlackFont("Status",  x + margin, height - margin * 19, true);
-		font.drawWhiteFont("Request time: " + printTime(player.getSoftware().getRequestTime()),  x + margin, height - margin * 21, true);
-		font.drawWhiteFont("I/O time: " + printTime(player.getSoftware().getIoTime()),  x + margin, height - margin * 23, true);
-		font.drawWhiteFont("Response time: " + printTime(player.getSoftware().getResponseTime()),  x + margin, height - margin * 25, true);
+		font.drawWhiteFont("Request time: " + printTime(player.getRequestTime()),  x + margin, height - margin * 21, true);
+		font.drawWhiteFont("I/O time: " + printTime(player.getIoTime()),  x + margin, height - margin * 23, true);
+		font.drawWhiteFont("Response time: " + printTime(player.getResponseTime()),  x + margin, height - margin * 25, true);
 		
 		font.drawWhiteFont("Servers: 2",  x + margin * 13, height - margin * 21, true);
 		font.drawWhiteFont("Threads: 3",  x + margin * 13, height - margin * 23, true);
@@ -125,47 +125,6 @@ public class SideBar {
 		sr.begin(ShapeType.Filled);
 		sr.setColor(Color.WHITE);
 		sr.rect(x, y, width, height);
-		sr.end();
-	}
-	
-	private void drawRectFrame(ShapeRenderer sr, float x, float y, float width, float height) {
-		final float lineHeight = height;
-		final float lineWidth = width + lineWeight;
-		sr.begin(ShapeType.Filled);
-		sr.setColor(Color.WHITE);
-		
-		// Left
-		sr.rect(x, y, lineWeight, lineWeight - lineHeight);
-		
-		// Right
-		sr.rect(x + width, y, lineWeight, lineWeight - lineHeight);
-		
-		// Top
-		sr.rect(x, y, lineWidth, lineWeight);
-		
-		// Bottom
-		sr.rect(x, y - lineHeight, lineWidth, lineWeight); 
-		
-		sr.end();
-	}
-	
-	private void drawRectFill(ShapeRenderer sr, Color c, float x, float y, float width, float height, int value, int maxValue) {
-		final float lineHeight = height;
-		final float lineWidth = width + lineWeight;
-		float lineValue = lineWidth * ((float)value / (float)maxValue) - lineWeight * 2f;
-		if (lineValue <= 0) {
-			return;
-		} else if (lineValue >= lineWidth - lineWeight * 2f) {
-			lineValue = lineWidth - lineWeight * 2f;
-		}
-		sr.begin(ShapeType.Filled);
-		if (c == null) {
-			sr.setColor(Color.LIGHT_GRAY);
-		} else {
-			sr.setColor(c);
-		}
-		
-		sr.rect(x + lineWeight, y - lineHeight, lineValue, lineHeight);
 		sr.end();
 	}
 	

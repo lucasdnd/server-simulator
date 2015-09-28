@@ -7,11 +7,6 @@ public class Software {
 	private int bugs = 0;
 	private boolean nonBlockingIO = false;
 	
-	// Times are in 1/10s of seconds
-	private int requestTime = 30;
-	private int ioTime = 80;
-	private int responseTime = 30;
-	
 	public Software() {
 		
 	}
@@ -51,29 +46,4 @@ public class Software {
 	public void setNonBlockingIO(boolean nonBlockingIO) {
 		this.nonBlockingIO = nonBlockingIO;
 	}
-
-	public int getRequestTime() {
-		return requestTime;
-	}
-
-	public void setRequestTime(int requestTime) {
-		this.requestTime = requestTime;
-	}
-
-	public int getResponseTime() {
-		return responseTime;
-	}
-
-	public void setResponseTime(int responseTime) {
-		this.responseTime = responseTime;
-	}
-
-	public int getIoTime() {
-		return ioTime;
-	}
-
-	public void setIoTime(int ioTime) {
-		this.ioTime = ioTime;
-	}
-	
 }

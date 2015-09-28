@@ -9,9 +9,11 @@ public class Player {
 	private int servicePrice = 100;
 	private int expenses;
 	
-	// Demand related stuff
-	private float demand = 0.25f;
-	
+	// Times are in 1/10s of seconds
+	private int requestTime = 30;
+	private int ioTime = 80;
+	private int responseTime = 30;
+
 	// Game objects
 	private ArrayList<Server> servers;
 	private Software software;
@@ -85,5 +87,29 @@ public class Player {
 
 	public Software getSoftware() {
 		return software;
+	}
+
+	public int getRequestTime() {
+		return requestTime;
+	}
+
+	public void setRequestTime(int requestTime) {
+		this.requestTime = requestTime;
+	}
+
+	public int getIoTime() {
+		return ioTime;
+	}
+
+	public void setIoTime(int ioTime) {
+		this.ioTime = ioTime;
+	}
+
+	public int getResponseTime() {
+		return responseTime;
+	}
+
+	public void setResponseTime(int responseTime) {
+		this.responseTime = responseTime;
 	}
 }

@@ -14,7 +14,7 @@ public class Server {
 	private int id;
 	private float x, y;
 	private float width = ServerSimulator.BLOCK_SIZE * 4f;
-	private float height = width;
+	private final float height = 96f;
 	private float lineWeight = ServerSimulator.BLOCK_SIZE;
 	private ShapeRenderer sr;
 	
@@ -30,18 +30,15 @@ public class Server {
 		for (int i = 0; i < software.getOptimization() + 1; i++) {
 			addNewThread();
 		}
-		
-		// Drawing stuff
-		height = 96f;
-		x = (Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH) / 2f - (width / 2f);
-		float offsetY = 32f;
-		y = Gdx.graphics.getHeight() - offsetY - (height * id + (offsetY * id));
 	}
 	
 	public void update() {
 		
 		// Drawing stuff
 		width = height;
+		x = (Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH) / 2f - (width / 2f);
+		float offsetY = 32f;
+		y = Gdx.graphics.getHeight() - (offsetY / 2f) - (height * id + (offsetY * id));
 		
 		// Threads
 		for (Thread t : threads) {
