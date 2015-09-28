@@ -40,6 +40,18 @@ public class Player {
 		}
 	}
 	
+	public void createNewRequest() {
+		long totalTicks = (long)(requestTime + ioTime + responseTime);
+		for (Server s : servers) {
+			for (Thread t : s.getThreads()) {
+				if (t.getRequest() == null) {
+					t.setRequest(new Request(totalTicks, t.getY()));
+					return;
+				}
+			}
+		}
+	}
+	
 	public void optimizeSoftware() {
 		software.setOptimization(software.getOptimization() + 1);
 		for (Server s : servers) {

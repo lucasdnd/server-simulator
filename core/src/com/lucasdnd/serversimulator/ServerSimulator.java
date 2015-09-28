@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.serversimulator.gameplay.Player;
+import com.lucasdnd.serversimulator.gameplay.Request;
 import com.lucasdnd.serversimulator.ui.SideBar;
 
 public class ServerSimulator extends ApplicationAdapter {
@@ -65,6 +66,9 @@ public class ServerSimulator extends ApplicationAdapter {
 			if (Gdx.input.isKeyJustPressed(Keys.T)) {
 				player.optimizeSoftware();
 			}
+			if (Gdx.input.isKeyJustPressed(Keys.R)) {
+				player.createNewRequest();
+			}
 		}
 	}
 		
@@ -104,6 +108,13 @@ public class ServerSimulator extends ApplicationAdapter {
 			font.drawWhiteFont("optimization: " + player.getSoftware().getOptimization(), 0f, Gdx.graphics.getHeight() - 20f, false);
 			font.drawWhiteFont("threads per server: " + threadsPerServer, 0f, Gdx.graphics.getHeight() - 40f, false);
 			font.drawWhiteFont("total threads: " + totalThreads, 0f, Gdx.graphics.getHeight() - 60f, false);
+			
+			Request request = player.getServers().get(0).getThreads().get(0).getRequest();
+			if (request != null) {
+				font.drawWhiteFont("request: " + request.getX(), 0f, Gdx.graphics.getHeight() - 100f, false);
+			} else {
+				font.drawWhiteFont("request: null", 0f, Gdx.graphics.getHeight() - 100f, false);
+			}
 		}
 	}
 	

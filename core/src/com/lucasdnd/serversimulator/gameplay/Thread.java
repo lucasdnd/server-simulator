@@ -22,8 +22,12 @@ public class Thread {
 	}
 	
 	public void update(float serverY) {
+		
 		if (request != null) {
 			request.update();
+			if (request.canDispose()) {
+				request = null;
+			}
 		}
 		
 		float b = ServerSimulator.BLOCK_SIZE;
@@ -50,6 +54,10 @@ public class Thread {
 		sr.rect(requestWidth + ioWidth, y, responseWidth, height);
 		
 		sr.end();
+		
+		if (request != null) {
+			request.render();
+		}
 	}
 
 	public Request getRequest() {
@@ -58,5 +66,9 @@ public class Thread {
 
 	public void setRequest(Request request) {
 		this.request = request;
+	}
+	
+	public float getY() {
+		return y;
 	}
 }
