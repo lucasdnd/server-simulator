@@ -48,4 +48,8 @@ public class Request {
 	public boolean canDispose() {
 		return dispose;
 	}
+	
+	public long getTicks() {
+		return ticks;
+	}
 }

@@ -41,7 +41,8 @@ public class Player {
 	}
 	
 	public void createNewRequest() {
-		long totalTicks = (long)(requestTime + ioTime + responseTime);
+		long totalTicks = (long)(requestTime / 10f + ioTime / 10f + responseTime / 10f);
+		totalTicks *= 60;
 		for (Server s : servers) {
 			for (Thread t : s.getThreads()) {
 				if (t.getRequest() == null) {

@@ -112,6 +112,8 @@ public class ServerSimulator extends ApplicationAdapter {
 			Request request = player.getServers().get(0).getThreads().get(0).getRequest();
 			if (request != null) {
 				font.drawWhiteFont("request: " + request.getX(), 0f, Gdx.graphics.getHeight() - 100f, false);
+				font.drawWhiteFont("ticks: " + request.getTicks(), 0f, Gdx.graphics.getHeight() - 120f, false);
+				font.drawWhiteFont("ticks / 60: " + (request.getTicks() / 60f), 0f, Gdx.graphics.getHeight() - 140f, false);
 			} else {
 				font.drawWhiteFont("request: null", 0f, Gdx.graphics.getHeight() - 100f, false);
 			}
