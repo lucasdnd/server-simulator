@@ -59,6 +59,8 @@ public class ServerSimulator extends ApplicationAdapter {
 
 			@Override
 			public void onClick() {
+				
+				// TODO: spend money
 				player.getSoftware().addFeatures();
 			}
 			

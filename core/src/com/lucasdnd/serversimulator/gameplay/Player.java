@@ -21,6 +21,12 @@ public class Player {
 	// Settings and stuff
 	private final int maxServers = 5;
 	
+	// Use some better curves here
+	private int[] featuresPrices = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	private int[] optimizationPrices = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	private int[] bugFixPrices = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	private int[] buyServerPrices = {0, 0, 0, 0};
+	
 	public Player() {
 		this.servers = new ArrayList<Server>();
 		this.software = new Software();
@@ -40,6 +46,46 @@ public class Player {
 		}
 	}
 	
+	/**
+	 * Earn money
+	 * @param value
+	 */
+	public void earnMoney(int value) {
+		money += value;
+	}
+	
+	/**
+	 * If the player has enough money, subtract it and return true
+	 * @param value
+	 * @return
+	 */
+	public boolean spendMoney(int value) {
+		if (money >= value) {
+			money -= value;
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * The price of stuff 
+	 */
+	public int getFeaturesPrice() {
+		return featuresPrices[software.getFeatures()];
+	}
+	public int getOptimizationPrice() {
+		return optimizationPrices[software.getOptimization()];
+	}
+	public int getBugFixPrice() {
+		return bugFixPrices[software.getBugs()];
+	}
+	public int getBuyServerPrice() {
+		return buyServerPrices[servers.size()];
+	}
+	
+	/**
+	 * Creates a new Request. It goes to the next available thread
+	 */
 	public void createNewRequest() {
 		long totalTicks = (long)(requestTime / 10f + ioTime / 10f + responseTime / 10f);
 		totalTicks *= 60;
@@ -53,6 +99,9 @@ public class Player {
 		}
 	}
 	
+	/**
+	 * Increases the number of threads the software can use. Also reduces the request times
+	 */
 	public void optimizeSoftware() {
 		software.optimize();
 		for (Server s : servers) {
@@ -60,6 +109,9 @@ public class Player {
 		}
 	}
 	
+	/**
+	 * Add a new server
+	 */
 	public void addNewServer() {
 		if (servers.size() < maxServers) {
 			servers.add(new Server(software, servers.size()));
