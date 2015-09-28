@@ -12,9 +12,9 @@ import com.lucasdnd.serversimulator.ServerSimulator;
 public class Button {
 	
 	protected float x, y, width;
-	protected final float height = 32f;
+	protected float height = 32f;
 	private final float textPaddingX = 2f;
-	private final float textPaddingY = 5f;
+	private float textPaddingY = 5f;
 	private final float paddingX = 32f;
 	private final float lineWeight = 4f;
 	
@@ -43,6 +43,14 @@ public class Button {
 		this(text);
 		this.x = x;
 		this.y = y;
+	}
+	
+	public Button(String text, float x, float y, float height, float textPaddingY) {
+		this(text);
+		this.x = x;
+		this.y = y;
+		this.height = height;
+		this.textPaddingY = textPaddingY;
 	}
 	
 	public void update() {
@@ -153,5 +161,4 @@ public class Button {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	
 }

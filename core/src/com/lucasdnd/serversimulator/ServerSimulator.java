@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.utils.Align;
+import com.lucasdnd.serversimulator.gameplay.Player;
 import com.lucasdnd.serversimulator.ui.SideBar;
 
 public class ServerSimulator extends ApplicationAdapter {
@@ -22,6 +22,7 @@ public class ServerSimulator extends ApplicationAdapter {
 	private int playableAreaWidth, playableAreaHeight;
 	
 	// Game objects
+	private Player player;
 
 	// UI
 	private SideBar sideBar;
@@ -45,6 +46,9 @@ public class ServerSimulator extends ApplicationAdapter {
 		// Input
 		inputHandler = new InputHandler();
 		Gdx.input.setInputProcessor(inputHandler);
+		
+		// Game Objects
+		player = new Player();
 
 		// UI
 		sideBar = new SideBar(Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH, 0);
@@ -62,6 +66,9 @@ public class ServerSimulator extends ApplicationAdapter {
 		// UI update
 		sideBar.update();
 		
+		// Game objects
+		player.update();
+		
 		inputHandler.refreshMouseClicks();
 	}
 
@@ -73,11 +80,18 @@ public class ServerSimulator extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		// UI Render
+		// UI render
 		sideBar.render(uiShapeRenderer);
+		
+		// Game render
+		player.render();
 	}
 	
 	public InputHandler getInputHandler() {
 		return inputHandler;
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 }

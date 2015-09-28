@@ -1,12 +1,16 @@
 package com.lucasdnd.serversimulator.ui;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.serversimulator.FontUtils;
-import com.lucasdnd.serversimulator.Resources;
 import com.lucasdnd.serversimulator.ServerSimulator;
+import com.lucasdnd.serversimulator.gameplay.Player;
 
 public class SideBar {
 	private int x, y;
@@ -18,7 +22,8 @@ public class SideBar {
 	private float barHeight;
 	private float barWidth;
 	
-	// Main Buttons
+	// Buttons
+	private Button newFeaturesButton, optimizeButton, bugFixButton, asyncIOButton, buyServerButton;
 	private Button newGameButton, saveGameButton, loadGameButton, quitButton;
 	
 	private FontUtils font;
@@ -31,6 +36,13 @@ public class SideBar {
 		font = new FontUtils();
 		
 		// Buttons
+		float height = Gdx.graphics.getHeight();
+		newFeaturesButton = new Button("+", this.x + margin, height - margin * 7, 24f, 2f);
+		optimizeButton = new Button("+", this.x + margin, height - margin * 9, 24f, 2f);
+		bugFixButton =  new Button("+", this.x + margin, height - margin * 11, 24f, 2f);
+		asyncIOButton =  new Button("+", this.x + margin, height - margin * 13, 24f, 2f);
+		buyServerButton = new Button("+", this.x + margin, height - margin * 17, 24f, 2f);
+		
 		newGameButton = new Button("New", this.x + margin, margin * 4);
 		saveGameButton = new Button("Save", this.x + margin * 5 + 6f, margin * 4);
 		loadGameButton = new Button("Load", this.x + margin * 10 + 4f, margin * 4);
@@ -38,6 +50,12 @@ public class SideBar {
 	}
 	
 	public void update() {
+		newFeaturesButton.update();
+		optimizeButton.update();
+		bugFixButton.update();
+		asyncIOButton.update();
+		buyServerButton.update();
+		
 		newGameButton.update();
 		saveGameButton.update();
 		loadGameButton.update();
@@ -55,29 +73,40 @@ public class SideBar {
 		sr.end();
 		
 		// Player stuff
-		font.drawWhiteFont("$",  x + margin, height - margin, true);
-		font.drawWhiteFont("Service price: ", x + margin, height - margin * 3, true);
-		font.drawWhiteFont("Expenses: ",  x + margin, height - margin * 5, true);
+		Player player = ((ServerSimulator)Gdx.app.getApplicationListener()).getPlayer();
+		
+		font.drawWhiteFont(printMoney(player.getMoney()),  x + margin, height - margin, true);
+		font.drawWhiteFont("Expenses: " + printMoney(player.getExpenses()), x + margin * 9, height - margin, true);
+		font.drawWhiteFont("Service price: " + printMoney(player.getServicePrice()), x + margin, height - margin * 3, true);
 		
 		// Software
-		drawBackgroundBar(sr, x, height - margin * 8, barWidth, barHeight - 12f);
-		font.drawBlackFont("Software",  x + margin, height - margin * 7, true);
+		drawBackgroundBar(sr, x, height - margin * 6, barWidth, barHeight - 12f);
+		font.drawBlackFont("Software",  x + margin, height - margin * 5, true);
+		newFeaturesButton.render();
+		font.drawWhiteFont("$ 30: New features",  x + margin * 4, height - margin * 7, true);
+		optimizeButton.render();
+		font.drawWhiteFont("$ 20: Optimize",  x + margin * 4, height - margin * 9, true);
+		bugFixButton.render();
+		font.drawWhiteFont("$ 10: Fix a bug",  x + margin * 4, height - margin * 11, true);
+		asyncIOButton.render();
+		font.drawWhiteFont("$ 500: Async I/O",  x + margin * 4, height - margin * 13, true);
 		
 		// Hardware
 		drawBackgroundBar(sr, x, height - margin * 16, barWidth, barHeight - 12f);
 		font.drawBlackFont("Hardware",  x + margin, height - margin * 15, true);
+		buyServerButton.render();
+		font.drawWhiteFont("$ 60: Buy Server",  x + margin * 4, height - margin * 17, true);
 		
 		// Status
-		drawBackgroundBar(sr, x, height - margin * 21, barWidth, barHeight - 12f);
-		font.drawBlackFont("Status",  x + margin, height - margin * 20, true);
+		drawBackgroundBar(sr, x, height - margin * 20, barWidth, barHeight - 12f);
+		font.drawBlackFont("Status",  x + margin, height - margin * 19, true);
+		font.drawWhiteFont("Request time: " + printTime(player.getSoftware().getRequestTime()),  x + margin, height - margin * 21, true);
+		font.drawWhiteFont("I/O time: " + printTime(player.getSoftware().getIoTime()),  x + margin, height - margin * 23, true);
+		font.drawWhiteFont("Response time: " + printTime(player.getSoftware().getResponseTime()),  x + margin, height - margin * 25, true);
 		
-		font.drawWhiteFont("Request time:",  x + margin, height - margin * 22, true);
-		font.drawWhiteFont("I/O time:",  x + margin, height - margin * 24, true);
-		font.drawWhiteFont("Response time:",  x + margin, height - margin * 26, true);
-		
-		font.drawWhiteFont("Servers:",  x + margin * 12, height - margin * 22, true);
-		font.drawWhiteFont("Threads:",  x + margin * 12, height - margin * 24, true);
-		font.drawWhiteFont("Bugs:",  x + margin * 12, height - margin * 26, true);
+		font.drawWhiteFont("Servers: 2",  x + margin * 13, height - margin * 21, true);
+		font.drawWhiteFont("Threads: 3",  x + margin * 13, height - margin * 23, true);
+		font.drawWhiteFont("Bugs: 0",  x + margin * 13, height - margin * 25, true);
 		
 		// New, save, load, quit
 		newGameButton.render();
@@ -136,6 +165,18 @@ public class SideBar {
 		
 		sr.rect(x + lineWeight, y - lineHeight, lineValue, lineHeight);
 		sr.end();
+	}
+	
+	private String printMoney(int money) {
+		NumberFormat nf = NumberFormat.getCurrencyInstance();
+		DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) nf).getDecimalFormatSymbols();
+		decimalFormatSymbols.setCurrencySymbol("");
+		((DecimalFormat) nf).setDecimalFormatSymbols(decimalFormatSymbols);
+		return "$ " + nf.format((float)money / 100).trim();
+	}
+	
+	private String printTime(int time) {
+		return (time / 10) + "." + (time % 10) + "s";
 	}
 	
 	public int getX() {
