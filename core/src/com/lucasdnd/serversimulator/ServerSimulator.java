@@ -6,8 +6,10 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.lucasdnd.serversimulator.gameplay.Market;
 import com.lucasdnd.serversimulator.gameplay.Player;
 import com.lucasdnd.serversimulator.gameplay.Request;
+import com.lucasdnd.serversimulator.ui.ButtonClickListener;
 import com.lucasdnd.serversimulator.ui.SideBar;
 
 public class ServerSimulator extends ApplicationAdapter {
@@ -23,6 +25,7 @@ public class ServerSimulator extends ApplicationAdapter {
 	private FontUtils font;
 	
 	// Game objects
+	private Market market;
 	private Player player;
 
 	// UI
@@ -48,9 +51,55 @@ public class ServerSimulator extends ApplicationAdapter {
 		
 		// Game Objects
 		player = new Player();
+		market = new Market();
 
 		// UI
 		sideBar = new SideBar(Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH, 0);
+		sideBar.getNewFeaturesButton().setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				player.getSoftware().addFeatures();
+			}
+			
+		});
+		
+		sideBar.getOptimizeButton().setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				player.optimizeSoftware();
+			}
+			
+		});
+		
+		sideBar.getBugFixButton().setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				player.getSoftware().fixBug();
+			}
+			
+		});
+		
+		sideBar.getAsyncIOButton().setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				player.getSoftware().setNonBlockingIO(true);
+			}
+			
+		});
+		
+		sideBar.getBuyServerButton().setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				player.addNewServer();
+			}
+			
+		});
+		
 	}
 	
 	private void handleInput() {
@@ -71,7 +120,7 @@ public class ServerSimulator extends ApplicationAdapter {
 			}
 		}
 	}
-		
+	
 	public void update() {
 		
 		handleInput();
@@ -80,6 +129,7 @@ public class ServerSimulator extends ApplicationAdapter {
 		sideBar.update();
 		
 		// Game objects
+		market.update(player.getSoftware().getFeatures());
 		player.update();
 		
 		inputHandler.refreshMouseClicks();
@@ -105,18 +155,18 @@ public class ServerSimulator extends ApplicationAdapter {
 			float threadsPerServer = player.getServers().get(0).getThreads().size();
 			float totalThreads = servers * threadsPerServer;
 			font.drawWhiteFont("servers: " + servers, 0f, Gdx.graphics.getHeight(), false);
-			font.drawWhiteFont("optimization: " + player.getSoftware().getOptimization(), 0f, Gdx.graphics.getHeight() - 20f, false);
-			font.drawWhiteFont("threads per server: " + threadsPerServer, 0f, Gdx.graphics.getHeight() - 40f, false);
-			font.drawWhiteFont("total threads: " + totalThreads, 0f, Gdx.graphics.getHeight() - 60f, false);
+			font.drawWhiteFont("features: " + player.getSoftware().getFeatures(), 0f, Gdx.graphics.getHeight() - 20f, false);
+			font.drawWhiteFont("demand: " + market.getDemand(), 0f, Gdx.graphics.getHeight() - 40f, false);
+			font.drawWhiteFont("optimization: " + player.getSoftware().getOptimization(), 0f, Gdx.graphics.getHeight() - 60f, false);
 			
-			Request request = player.getServers().get(0).getThreads().get(0).getRequest();
-			if (request != null) {
-				font.drawWhiteFont("request: " + request.getX(), 0f, Gdx.graphics.getHeight() - 100f, false);
-				font.drawWhiteFont("ticks: " + request.getTicks(), 0f, Gdx.graphics.getHeight() - 120f, false);
-				font.drawWhiteFont("ticks / 60: " + (request.getTicks() / 60f), 0f, Gdx.graphics.getHeight() - 140f, false);
-			} else {
-				font.drawWhiteFont("request: null", 0f, Gdx.graphics.getHeight() - 100f, false);
-			}
+//			Request request = player.getServers().get(0).getThreads().get(0).getRequest();
+//			if (request != null) {
+//				font.drawWhiteFont("request: " + request.getX(), 0f, Gdx.graphics.getHeight() - 100f, false);
+//				font.drawWhiteFont("ticks: " + request.getTicks(), 0f, Gdx.graphics.getHeight() - 120f, false);
+//				font.drawWhiteFont("ticks / 60: " + (request.getTicks() / 60f), 0f, Gdx.graphics.getHeight() - 140f, false);
+//			} else {
+//				font.drawWhiteFont("request: null", 0f, Gdx.graphics.getHeight() - 100f, false);
+//			}
 		}
 	}
 	

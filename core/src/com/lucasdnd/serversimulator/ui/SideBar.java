@@ -159,4 +159,24 @@ public class SideBar {
 	public Button getQuitButton() {
 		return quitButton;
 	}
+
+	public Button getNewFeaturesButton() {
+		return newFeaturesButton;
+	}
+
+	public Button getOptimizeButton() {
+		return optimizeButton;
+	}
+
+	public Button getBugFixButton() {
+		return bugFixButton;
+	}
+
+	public Button getAsyncIOButton() {
+		return asyncIOButton;
+	}
+
+	public Button getBuyServerButton() {
+		return buyServerButton;
+	}
 }

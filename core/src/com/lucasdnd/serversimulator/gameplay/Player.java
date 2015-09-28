@@ -54,7 +54,7 @@ public class Player {
 	}
 	
 	public void optimizeSoftware() {
-		software.setOptimization(software.getOptimization() + 1);
+		software.optimize();
 		for (Server s : servers) {
 			s.addNewThread();
 		}

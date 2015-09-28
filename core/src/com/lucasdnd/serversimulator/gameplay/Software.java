@@ -1,5 +1,7 @@
 package com.lucasdnd.serversimulator.gameplay;
 
+import java.util.Random;
+
 public class Software {
 
 	private int features = 0;
@@ -15,28 +17,33 @@ public class Software {
 		
 	}
 	
+	public void addFeatures() {
+		features++;
+		if (new Random().nextBoolean()) {
+			bugs++;
+		}
+	}
+	
+	public void fixBug() {
+		if (bugs > 0) {
+			bugs--;
+		}
+	}
+	
+	public void optimize() {
+		optimization++;
+	}
+	
 	public int getFeatures() {
 		return features;
-	}
-
-	public void setFeatures(int features) {
-		this.features = features;
 	}
 
 	public int getOptimization() {
 		return optimization;
 	}
 
-	public void setOptimization(int optimization) {
-		this.optimization = optimization;
-	}
-
 	public int getBugs() {
 		return bugs;
-	}
-
-	public void setBugs(int bugs) {
-		this.bugs = bugs;
 	}
 
 	public boolean isNonBlockingIO() {
