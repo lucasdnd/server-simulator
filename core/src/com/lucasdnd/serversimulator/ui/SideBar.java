@@ -36,12 +36,14 @@ public class SideBar {
 		font = new FontUtils();
 		
 		// Buttons
-		float height = Gdx.graphics.getHeight();
-		newFeaturesButton = new Button("+", this.x + margin, height - margin * 7, 24f, 2f);
-		optimizeButton = new Button("+", this.x + margin, height - margin * 9, 24f, 2f);
-		bugFixButton =  new Button("+", this.x + margin, height - margin * 11, 24f, 2f);
-		asyncIOButton =  new Button("+", this.x + margin, height - margin * 13, 24f, 2f);
-		buyServerButton = new Button("+", this.x + margin, height - margin * 17, 24f, 2f);
+		final float height = Gdx.graphics.getHeight();
+		final float buttonHeight = 24f;
+		final float buttonTextPaddingY = 2f;
+		newFeaturesButton = new Button("+", this.x + margin, height - margin * 7, buttonHeight, buttonTextPaddingY);
+		optimizeButton = new Button("+", this.x + margin, height - margin * 9, buttonHeight, buttonTextPaddingY);
+		bugFixButton =  new Button("+", this.x + margin, height - margin * 11, buttonHeight, buttonTextPaddingY);
+		asyncIOButton =  new Button("+", this.x + margin, height - margin * 13, buttonHeight, buttonTextPaddingY);
+		buyServerButton = new Button("+", this.x + margin, height - margin * 17, buttonHeight, buttonTextPaddingY);
 		
 		newGameButton = new Button("New", this.x + margin, margin * 4);
 		saveGameButton = new Button("Save", this.x + margin * 5 + 6f, margin * 4);
