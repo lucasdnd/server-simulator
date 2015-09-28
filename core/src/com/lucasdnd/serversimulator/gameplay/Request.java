@@ -26,9 +26,9 @@ public class Request {
 	
 	public void update() {
 		ticks++;
-		float playableAreaWidth = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH;
+		float playableAreaWidth = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH - width;
 		x = (playableAreaWidth * ticks) / totalTicks;
-
+		
 		if (ticks >= totalTicks) {
 			dispose = true;
 		}
