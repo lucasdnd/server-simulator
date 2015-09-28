@@ -2,17 +2,15 @@ package com.lucasdnd.serversimulator.gameplay;
 
 public class Software {
 
-	int features = 0;
-	int optimization = 0;
-	int bugs = 0;
-	boolean nonBlockingIO = false;
-	
-	int threads = 1;
+	private int features = 0;
+	private int optimization = 0;
+	private int bugs = 0;
+	private boolean nonBlockingIO = false;
 	
 	// Times are in 1/10s of seconds
-	int requestTime = 30;
-	int ioTime = 80;
-	int responseTime = 30;
+	private int requestTime = 30;
+	private int ioTime = 80;
+	private int responseTime = 30;
 	
 	public Software() {
 		
@@ -21,7 +19,7 @@ public class Software {
 	public void update() {
 		
 	}
-
+	
 	public int getFeatures() {
 		return features;
 	}
@@ -52,14 +50,6 @@ public class Software {
 
 	public void setNonBlockingIO(boolean nonBlockingIO) {
 		this.nonBlockingIO = nonBlockingIO;
-	}
-
-	public int getThreads() {
-		return threads;
-	}
-
-	public void setThreads(int threads) {
-		this.threads = threads;
 	}
 
 	public int getRequestTime() {

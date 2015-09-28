@@ -12,20 +12,43 @@ public class Player {
 	// Demand related stuff
 	private float demand = 0.25f;
 	
+	// Game objects
 	private ArrayList<Server> servers;
 	private Software software;
+	
+	// Settings and stuff
+	private final int maxServers = 5;
 	
 	public Player() {
 		this.servers = new ArrayList<Server>();
 		this.software = new Software();
+		addNewServer();
 	}
 	
 	public void update() {
-		
+		software.update();
+		for (Server s : servers) {
+			s.update();
+		}
 	}
 	
 	public void render() {
-		
+		for (Server s : servers) {
+			s.render();
+		}
+	}
+	
+	public void optimizeSoftware() {
+		software.setOptimization(software.getOptimization() + 1);
+		for (Server s : servers) {
+			s.addNewThread();
+		}
+	}
+	
+	public void addNewServer() {
+		if (servers.size() < maxServers) {
+			servers.add(new Server(software, servers.size()));
+		}
 	}
 
 	public int getMoney() {
