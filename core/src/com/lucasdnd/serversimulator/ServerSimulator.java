@@ -29,7 +29,6 @@ public class ServerSimulator extends ApplicationAdapter {
 	
 	// Input, camera
 	private InputHandler inputHandler;
-	private OrthographicCamera camera;
 	private ShapeRenderer shapeRenderer;
 	private ShapeRenderer uiShapeRenderer;
 	
@@ -39,7 +38,6 @@ public class ServerSimulator extends ApplicationAdapter {
 		// Render, camera
 		shapeRenderer = new ShapeRenderer();
  		uiShapeRenderer = new ShapeRenderer();
-		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		fontBatch = new SpriteBatch();
 		font = new FontUtils();
 		
@@ -57,11 +55,6 @@ public class ServerSimulator extends ApplicationAdapter {
 	}
 	
 	public void update() {
-		
-		// Camera update
-//		camera.position.set(player.getX() * OnePixel.blockSize + (SideBar.SIDEBAR_WIDTH * 0.5f), player.getY() * OnePixel.blockSize, 0f);
-		camera.update();
-		shapeRenderer.setProjectionMatrix(camera.combined);
 		
 		// UI update
 		sideBar.update();
