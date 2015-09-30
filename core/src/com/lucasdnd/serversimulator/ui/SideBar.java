@@ -143,9 +143,9 @@ public class SideBar {
 		font.drawWhiteFont("I/O time: " + printTime(player.getIoTime()),  x + margin, height - margin * 23, true);
 		font.drawWhiteFont("Response time: " + printTime(player.getResponseTime()),  x + margin, height - margin * 25, true);
 		
-		font.drawWhiteFont("Servers: 2",  x + margin * 13, height - margin * 21, true);
-		font.drawWhiteFont("Threads: 3",  x + margin * 13, height - margin * 23, true);
-		font.drawWhiteFont("Bugs: 0",  x + margin * 13, height - margin * 25, true);
+		font.drawWhiteFont("Servers: " + player.getServers().size(),  x + margin * 13, height - margin * 21, true);
+		font.drawWhiteFont("Threads: " + ((player.getSoftware().getOptimization() + 1) * player.getServers().size()),  x + margin * 13, height - margin * 23, true);
+		font.drawWhiteFont("Bugs: " + player.getSoftware().getBugs(),  x + margin * 13, height - margin * 25, true);
 		
 		// New, save, load, quit
 		newGameButton.render();
