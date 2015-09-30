@@ -24,6 +24,7 @@ public class SideBar {
 	private float barWidth;
 	
 	// Buttons
+	private Button increasePriceButton, decreasePriceButton;
 	private Button newFeaturesButton, optimizeButton, bugFixButton, asyncIOButton, buyServerButton;
 	private Button newGameButton, saveGameButton, loadGameButton, quitButton;
 	
@@ -40,6 +41,10 @@ public class SideBar {
 		final float height = Gdx.graphics.getHeight();
 		final float buttonHeight = 24f;
 		final float buttonTextPaddingY = 2f;
+		
+		increasePriceButton = new Button("+", this.x + margin * 17, margin * 29, buttonHeight, buttonTextPaddingY);
+		decreasePriceButton = new Button("-", this.x + margin * 15, margin * 29, buttonHeight, buttonTextPaddingY);
+		
 		newFeaturesButton = new Button("+", this.x + margin, height - margin * 7, buttonHeight, buttonTextPaddingY);
 		optimizeButton = new Button("+", this.x + margin, height - margin * 9, buttonHeight, buttonTextPaddingY);
 		bugFixButton =  new Button("+", this.x + margin, height - margin * 11, buttonHeight, buttonTextPaddingY);
@@ -53,6 +58,9 @@ public class SideBar {
 	}
 	
 	public void update() {
+		increasePriceButton.update();
+		decreasePriceButton.update();
+		
 		newFeaturesButton.update();
 		optimizeButton.update();
 		bugFixButton.update();
@@ -81,6 +89,9 @@ public class SideBar {
 		font.drawWhiteFont(printMoney(player.getMoney()),  x + margin, height - margin, true);
 		font.drawWhiteFont("Expenses: " + printMoney(player.getExpenses()), x + margin * 9, height - margin, true);
 		font.drawWhiteFont("Service price: " + printMoney(player.getServicePrice()), x + margin, height - margin * 3, true);
+		
+		increasePriceButton.render();
+		decreasePriceButton.render();
 		
 		// Software
 		drawBackgroundBar(sr, x, height - margin * 6, barWidth, barHeight - 12f);
@@ -204,5 +215,13 @@ public class SideBar {
 
 	public Button getBuyServerButton() {
 		return buyServerButton;
+	}
+
+	public Button getIncreasePriceButton() {
+		return increasePriceButton;
+	}
+
+	public Button getDecreasePriceButton() {
+		return decreasePriceButton;
 	}
 }

@@ -7,7 +7,7 @@ import com.lucasdnd.serversimulator.ServerSimulator;
 public class Player {
 	
 	// Status
-	private int money = 100000000;
+	private int money = 1000000;
 	private int servicePrice = 100;
 	private int expenses;
 	
@@ -30,6 +30,9 @@ public class Player {
 	private int[] buyServerPrices = {12000, 15000, 18000, 23000};
 	private int asyncIOPrice = 50000;
 	
+	private final int minServicePrice = 50;
+	private final int maxServicePrice = 1000;
+	
 	public Player() {
 		this.servers = new ArrayList<Server>();
 		this.software = new Software();
@@ -46,6 +49,20 @@ public class Player {
 	public void render(ServerSimulator game) {
 		for (Server s : servers) {
 			s.render(game);
+		}
+	}
+	
+	public void increaseServicePrice() {
+		servicePrice += 50;
+		if (servicePrice >= maxServicePrice) {
+			servicePrice = maxServicePrice;
+		}
+	}
+	
+	public void decreaseServicePrice() {
+		servicePrice -= 50;
+		if (servicePrice <= minServicePrice) {
+			servicePrice = minServicePrice;
 		}
 	}
 	
@@ -117,7 +134,7 @@ public class Player {
 		for (Server s : servers) {
 			for (Thread t : s.getThreads()) {
 				if (t.getRequest() == null) {
-					t.setRequest(new Request(totalTicks, t.getY()));
+					t.setRequest(new Request(totalTicks, t.getY(), servicePrice));
 					return;
 				}
 			}

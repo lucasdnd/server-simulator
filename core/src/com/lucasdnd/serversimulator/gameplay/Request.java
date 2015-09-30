@@ -15,13 +15,16 @@ public class Request {
 	private long ticks, totalTicks;
 	private ShapeRenderer sr;
 	
+	private int priceToPay;	// A snapshot of the price when the request was created
+	
 	private boolean dispose;
 	
-	public Request(long totalTicks, float y) {
+	public Request(long totalTicks, float y, int priceToPay) {
 		sr = new ShapeRenderer();
 		x = 0f;
 		this.y = y;
 		this.totalTicks = totalTicks;
+		this.priceToPay = priceToPay;
 	}
 	
 	public void update() {
@@ -51,5 +54,9 @@ public class Request {
 	
 	public long getTicks() {
 		return ticks;
+	}
+	
+	public int getPriceToPay() {
+		return priceToPay;
 	}
 }

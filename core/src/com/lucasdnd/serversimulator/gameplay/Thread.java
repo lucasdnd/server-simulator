@@ -40,7 +40,7 @@ public class Thread {
 				} else {
 					
 					// $$$
-					game.getPlayer().earnServiceMoney();
+					game.getPlayer().earnMoney(request.getPriceToPay());
 					request = null;
 				}
 			}

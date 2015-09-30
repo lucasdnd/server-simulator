@@ -4,7 +4,6 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.serversimulator.gameplay.Market;
 import com.lucasdnd.serversimulator.gameplay.Player;
@@ -21,7 +20,6 @@ public class ServerSimulator extends ApplicationAdapter {
 	
 	// Rendering, font
 	public static final float BLOCK_SIZE = 8f;
-	private SpriteBatch fontBatch;
 	private FontUtils font;
 	
 	// Game objects
@@ -33,16 +31,13 @@ public class ServerSimulator extends ApplicationAdapter {
 	
 	// Input, camera
 	private InputHandler inputHandler;
-	private ShapeRenderer shapeRenderer;
 	private ShapeRenderer uiShapeRenderer;
 	
 	@Override
 	public void create() {
 
 		// Render, camera
-		shapeRenderer = new ShapeRenderer();
  		uiShapeRenderer = new ShapeRenderer();
-		fontBatch = new SpriteBatch();
 		font = new FontUtils();
 		
 		// Input
@@ -55,6 +50,25 @@ public class ServerSimulator extends ApplicationAdapter {
 
 		// UI
 		sideBar = new SideBar(Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH, 0);
+		
+		sideBar.getIncreasePriceButton().setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				player.increaseServicePrice();
+			}
+			
+		});
+		
+		sideBar.getDecreasePriceButton().setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				player.decreaseServicePrice();
+			}
+			
+		});
+		
 		sideBar.getNewFeaturesButton().setClickListener(new ButtonClickListener() {
 
 			@Override
@@ -184,8 +198,8 @@ public class ServerSimulator extends ApplicationAdapter {
 		// Debug
 		if (debug) {
 			float servers = player.getServers().size();
-			float threadsPerServer = player.getServers().get(0).getThreads().size();
-			float totalThreads = servers * threadsPerServer;
+//			float threadsPerServer = player.getServers().get(0).getThreads().size();
+//			float totalThreads = servers * threadsPerServer;
 			
 			font.drawWhiteFont("demand: " + market.getDemand(), 0f, Gdx.graphics.getHeight() - 0f, false);
 			font.drawWhiteFont("features: " + player.getSoftware().getFeatures(), 0f, Gdx.graphics.getHeight() - 20f, false);
