@@ -179,7 +179,7 @@ public class ServerSimulator extends ApplicationAdapter {
 		sideBar.render(uiShapeRenderer);
 		
 		// Game render
-		player.render();
+		player.render(this);
 		
 		// Debug
 		if (debug) {

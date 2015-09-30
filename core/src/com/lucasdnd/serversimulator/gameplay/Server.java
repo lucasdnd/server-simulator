@@ -46,13 +46,21 @@ public class Server {
 		}
 	}
 	
-	public void render() {
+	public void render(ServerSimulator game) {
 		
 		for (Thread t : threads) {
 			t.render(y);
 		}
 		
 		drawRectFrame();
+		
+		// This rect represents the fact the server is "blocked" to processing one request a time
+		if (game.getPlayer().getSoftware().isNonBlockingIO() == false) {
+			sr.begin(ShapeType.Filled);
+			sr.setColor(Color.LIGHT_GRAY);
+			sr.rect(x + lineWeight, y - height + lineWeight, width - lineWeight, height - lineWeight);
+			sr.end();
+		}
 	}
 	
 	public void addNewThread() {

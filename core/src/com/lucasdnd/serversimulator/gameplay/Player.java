@@ -43,9 +43,9 @@ public class Player {
 		}
 	}
 	
-	public void render() {
+	public void render(ServerSimulator game) {
 		for (Server s : servers) {
-			s.render();
+			s.render(game);
 		}
 	}
 	
