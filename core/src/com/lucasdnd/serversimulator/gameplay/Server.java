@@ -1,7 +1,5 @@
 package com.lucasdnd.serversimulator.gameplay;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -19,18 +17,9 @@ public class Server {
 	private float lineWeight = ServerSimulator.BLOCK_SIZE;
 	private ShapeRenderer sr;
 	
-	public final static int maxThreads = 5;
-	private ArrayList<Thread> threads;
-	
 	public Server(Software software, int id) {
-		
 		this.id = id;
 		sr = new ShapeRenderer();
-		
-		threads = new ArrayList<Thread>();
-		for (int i = 0; i < software.getOptimization() + 1; i++) {
-			addNewThread();
-		}
 	}
 	
 	public void update(ServerSimulator game) {
@@ -48,18 +37,9 @@ public class Server {
 		x = (Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH) / 2f - (width / 2f);
 		float offsetY = 32f;
 		y = Gdx.graphics.getHeight() - (offsetY / 2f) - (height * id + (offsetY * id)) - marginTop;
-		
-		// Threads
-		for (Thread t : threads) {
-			t.update(game, y);
-		}
 	}
 	
 	public void render(ServerSimulator game) {
-		
-		for (Thread t : threads) {
-			t.render(y);
-		}
 		
 		drawRectFrame();
 		
@@ -69,12 +49,6 @@ public class Server {
 			sr.setColor(Color.LIGHT_GRAY);
 			sr.rect(x + lineWeight, y - height + lineWeight, width - lineWeight, height - lineWeight);
 			sr.end();
-		}
-	}
-	
-	public void addNewThread() {
-		if (threads.size() < maxThreads) {
-			threads.add(new Thread(threads.size()));
 		}
 	}
 	
@@ -97,9 +71,5 @@ public class Server {
 		sr.rect(x, y - lineHeight, lineWidth, lineWeight); 
 		
 		sr.end();
-	}
-
-	public ArrayList<Thread> getThreads() {
-		return threads;
 	}
 }

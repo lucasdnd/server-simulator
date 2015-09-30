@@ -25,12 +25,13 @@ public class SideBar {
 	
 	// Buttons
 	private Button increasePriceButton, decreasePriceButton;
-	private Button newFeaturesButton, optimizeButton, bugFixButton, asyncIOButton, buyServerButton;
+	private Button newFeaturesButton, optimizeButton, buyThreadButton, bugFixButton, asyncIOButton;
 	private Button newGameButton, saveGameButton, loadGameButton, quitButton;
 	
 	private FontUtils font;
 	
 	public SideBar(int x, int y) {
+		
 		this.x = x;
 		this.y = y;
 		barHeight = margin * 1.8f;
@@ -46,10 +47,10 @@ public class SideBar {
 		decreasePriceButton = new Button("-", this.x + margin * 15, height - margin * 3, buttonHeight, buttonTextPaddingY);
 		
 		newFeaturesButton = new Button("+", this.x + margin, height - margin * 7, buttonHeight, buttonTextPaddingY);
-		optimizeButton = new Button("+", this.x + margin, height - margin * 9, buttonHeight, buttonTextPaddingY);
-		bugFixButton =  new Button("+", this.x + margin, height - margin * 11, buttonHeight, buttonTextPaddingY);
-		asyncIOButton =  new Button("+", this.x + margin, height - margin * 13, buttonHeight, buttonTextPaddingY);
-		buyServerButton = new Button("+", this.x + margin, height - margin * 17, buttonHeight, buttonTextPaddingY);
+		buyThreadButton = new Button("+", this.x + margin, height - margin * 9, buttonHeight, buttonTextPaddingY);
+		optimizeButton = new Button("+", this.x + margin, height - margin * 11, buttonHeight, buttonTextPaddingY);
+		bugFixButton =  new Button("+", this.x + margin, height - margin * 13, buttonHeight, buttonTextPaddingY);
+		asyncIOButton =  new Button("+", this.x + margin, height - margin * 15, buttonHeight, buttonTextPaddingY);
 		
 		newGameButton = new Button("New", this.x + margin, margin * 4);
 		saveGameButton = new Button("Save", this.x + margin * 5 + 6f, margin * 4);
@@ -62,10 +63,10 @@ public class SideBar {
 		decreasePriceButton.update();
 		
 		newFeaturesButton.update();
+		buyThreadButton.update();
 		optimizeButton.update();
 		bugFixButton.update();
 		asyncIOButton.update();
-		buyServerButton.update();
 		
 		newGameButton.update();
 		saveGameButton.update();
@@ -104,48 +105,47 @@ public class SideBar {
 			font.drawWhiteFont(printMoney(player.getFeaturesPrice()) + ": New features",  x + margin * 4, height - margin * 7, true);
 		}
 		
-		optimizeButton.render();
-		if (player.getSoftware().getOptimization() >= Software.maxOptimization) {
-			font.drawWhiteFont("Optimization at maximum",  x + margin * 4, height - margin * 9, true);
+		buyThreadButton.render();
+		if (player.getSoftware().getThreads().size() >= Software.maxThreads) {
+			font.drawWhiteFont("Maximum threads",  x + margin * 4, height - margin * 9, true);
 		} else {
-			font.drawWhiteFont(printMoney(player.getOptimizationPrice()) + ": Optimize",  x + margin * 4, height - margin * 9, true);
+			font.drawWhiteFont(printMoney(player.getThreadPrice()) + ": Buy Thread",  x + margin * 4, height - margin * 9, true);
 		}
 		
+		optimizeButton.render();
+		if (player.getSoftware().getOptimization() >= Software.maxOptimization) {
+			font.drawWhiteFont("Optimization at maximum",  x + margin * 4, height - margin * 11, true);
+		} else {
+			font.drawWhiteFont(printMoney(player.getOptimizationPrice()) + ": Optimize",  x + margin * 4, height - margin * 11, true);
+		}
+	
 		bugFixButton.render();
 		if (player.getSoftware().getBugs() == 0) {
-			font.drawWhiteFont("No bugs to fix",  x + margin * 4, height - margin * 11, true);
+			font.drawWhiteFont("No bugs to fix",  x + margin * 4, height - margin * 13, true);
 		} else {
-			font.drawWhiteFont(printMoney(player.getBugFixPrice()) + ": Fix a bug",  x + margin * 4, height - margin * 11, true);
+			font.drawWhiteFont(printMoney(player.getBugFixPrice()) + ": Fix a bug",  x + margin * 4, height - margin * 13, true);
 		}
 		
 		asyncIOButton.render();
 		if (player.getSoftware().isNonBlockingIO()) {
-			font.drawWhiteFont("Already async IO",  x + margin * 4, height - margin * 13, true);
+			font.drawWhiteFont("Already async IO",  x + margin * 4, height - margin * 15, true);
 		} else {
-			font.drawWhiteFont(printMoney(player.getAsyncIOPrice()) + ": Async I/O",  x + margin * 4, height - margin * 13, true);
-		}
-		
-		// Hardware
-		drawBackgroundBar(sr, x, height - margin * 16, barWidth, barHeight - 12f);
-		font.drawBlackFont("Hardware",  x + margin, height - margin * 15, true);
-		
-		buyServerButton.render();
-		if (player.getServers().size() >= Player.maxServers) {
-			font.drawWhiteFont("Can't buy any more servers",  x + margin * 4, height - margin * 17, true);
-		} else {
-			font.drawWhiteFont(printMoney(player.getBuyServerPrice()) + ": Buy Server",  x + margin * 4, height - margin * 17, true);
+			font.drawWhiteFont(printMoney(player.getAsyncIOPrice()) + ": Async I/O",  x + margin * 4, height - margin * 15, true);
 		}
 		
 		// Status
-		drawBackgroundBar(sr, x, height - margin * 20, barWidth, barHeight - 12f);
-		font.drawBlackFont("Status",  x + margin, height - margin * 19, true);
+		drawBackgroundBar(sr, x, height - margin * 18, barWidth, barHeight - 12f);
+		font.drawBlackFont("Status",  x + margin, height - margin * 17, true);
+		
+		font.drawWhiteFont("Threads: " + (player.getSoftware().getOptimization() + 1),  x + margin, height - margin * 19, true);
+		font.drawWhiteFont("Bugs: " + player.getSoftware().getBugs(),  x + margin * 13, height - margin * 19, true);
+		
 		font.drawWhiteFont("Request time: " + printTime(player.getRequestTime()),  x + margin, height - margin * 21, true);
 		font.drawWhiteFont("I/O time: " + printTime(player.getIoTime()),  x + margin, height - margin * 23, true);
 		font.drawWhiteFont("Response time: " + printTime(player.getResponseTime()),  x + margin, height - margin * 25, true);
 		
-		font.drawWhiteFont("Servers: " + player.getServers().size(),  x + margin * 13, height - margin * 21, true);
-		font.drawWhiteFont("Threads: " + ((player.getSoftware().getOptimization() + 1) * player.getServers().size()),  x + margin * 13, height - margin * 23, true);
-		font.drawWhiteFont("Bugs: " + player.getSoftware().getBugs(),  x + margin * 13, height - margin * 25, true);
+		font.drawWhiteFont("Total requests: 3",  x + margin, height - margin * 27, true);
+		font.drawWhiteFont("Lost: 7" + player.getSoftware().getBugs(),  x + margin * 13, height - margin * 27, true);
 		
 		// New, save, load, quit
 		newGameButton.render();
@@ -211,10 +211,6 @@ public class SideBar {
 
 	public Button getAsyncIOButton() {
 		return asyncIOButton;
-	}
-
-	public Button getBuyServerButton() {
-		return buyServerButton;
 	}
 
 	public Button getIncreasePriceButton() {

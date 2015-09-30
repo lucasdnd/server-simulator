@@ -127,21 +127,6 @@ public class ServerSimulator extends ApplicationAdapter {
 			}
 			
 		});
-		
-		sideBar.getBuyServerButton().setClickListener(new ButtonClickListener() {
-
-			@Override
-			public void onClick() {
-				if (player.spendMoney(player.getServicePrice())) {
-					player.addNewServer();
-				}
-				
-				if (player.getServers().size() >= Player.maxServers) {
-					sideBar.getBuyServerButton().setEnabled(false);
-				}
-			}
-			
-		});
 	}
 	
 	private void updateBugFixButtonState() {
@@ -150,17 +135,11 @@ public class ServerSimulator extends ApplicationAdapter {
 	
 	private void handleInput() {
 		
-		if (Gdx.input.isKeyJustPressed(Keys.F3)) {
+		if (Gdx.input.isKeyJustPressed(Keys.D)) {
 			debug = !debug;
 		}
 		
 		if (debug) {
-			if (Gdx.input.isKeyJustPressed(Keys.S)) {
-				player.addNewServer();
-			}
-			if (Gdx.input.isKeyJustPressed(Keys.T)) {
-				player.optimizeSoftware();
-			}
 			if (Gdx.input.isKeyJustPressed(Keys.R)) {
 				player.createNewRequest();
 			}
@@ -197,7 +176,6 @@ public class ServerSimulator extends ApplicationAdapter {
 		
 		// Debug
 		if (debug) {
-			float servers = player.getServers().size();
 //			float threadsPerServer = player.getServers().get(0).getThreads().size();
 //			float totalThreads = servers * threadsPerServer;
 			
@@ -205,7 +183,6 @@ public class ServerSimulator extends ApplicationAdapter {
 			font.drawWhiteFont("features: " + player.getSoftware().getFeatures(), 0f, Gdx.graphics.getHeight() - 20f, false);
 			font.drawWhiteFont("optimization: " + player.getSoftware().getOptimization(), 0f, Gdx.graphics.getHeight() - 40f, false);
 			font.drawWhiteFont("bugs: " + player.getSoftware().getBugs(), 0f, Gdx.graphics.getHeight() - 60f, false);
-			font.drawWhiteFont("servers: " + servers, 0f, Gdx.graphics.getHeight() - 80f, false);
 			font.drawWhiteFont("request gen ticks: " + market.getMaxRequestGenerationTicks(), 0f, Gdx.graphics.getHeight() - 100f, false);
 			
 //			Request request = player.getServers().get(0).getThreads().get(0).getRequest();

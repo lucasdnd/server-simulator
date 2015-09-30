@@ -27,11 +27,14 @@ public class Request {
 		this.priceToPay = priceToPay;
 	}
 	
-	public void update() {
+	public void update(ServerSimulator game) {
+		
+		// Move it
 		ticks++;
+		
+		// Update its position on the screen
 		float playableAreaWidth = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH - width;
 		x = (playableAreaWidth * ticks) / totalTicks;
-		
 		if (ticks >= totalTicks) {
 			dispose = true;
 		}

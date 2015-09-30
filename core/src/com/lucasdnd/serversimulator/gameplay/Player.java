@@ -17,7 +17,7 @@ public class Player {
 	private int responseTime = 30;
 
 	// Game objects
-	private ArrayList<Server> servers;
+	private Server server;
 	private Software software;
 	
 	// Settings and stuff
@@ -25,6 +25,7 @@ public class Player {
 	
 	// Use some better curves here
 	private int[] featuresPrices = {6000, 8000, 10500, 13500, 17000, 21000, 25500, 30500, 36000, 42000};
+	private int[] threadPrices = {6000, 8000, 10500, 13500, 17000, 21000, 25500, 30500, 36000, 42000};
 	private int[] optimizationPrices = {2000, 4000, 6000, 8000, 10000, 12000, 14000, 16000, 18000, 20000};
 	private int[] bugFixPrices = {3000, 4000, 6000, 9000, 13000, 18000, 24000, 31000, 39000, 48000};
 	private int[] buyServerPrices = {12000, 15000, 18000, 23000};
@@ -34,22 +35,17 @@ public class Player {
 	private final int maxServicePrice = 1000;
 	
 	public Player() {
-		this.servers = new ArrayList<Server>();
 		this.software = new Software();
-		addNewServer();
+		this.server = new Server(software, 0);
 	}
 	
 	public void update(ServerSimulator game) {
 		software.update();
-		for (Server s : servers) {
-			s.update(game);
-		}
+		server.update(game);;
 	}
 	
 	public void render(ServerSimulator game) {
-		for (Server s : servers) {
-			s.render(game);
-		}
+		server.render(game);
 	}
 	
 	public void increaseServicePrice() {
@@ -112,31 +108,31 @@ public class Player {
 		}
 		return bugFixPrices[software.getBugs()];
 	}
+	public int getThreadPrice() {
+		if (software.getThreads().size() >= Software.maxThreads) {
+			return 0;
+		}
+		return threadPrices[software.getThreads().size() - 1];
+	}
 	public int getAsyncIOPrice() {
 		if (software.isNonBlockingIO()) {
 			return 0;
 		}
 		return asyncIOPrice;
 	}
-	public int getBuyServerPrice() {
-		if (servers.size() > buyServerPrices.length) {
-			return 0;
-		}
-		return buyServerPrices[servers.size() - 1];
-	}
 	
 	/**
 	 * Creates a new Request. It goes to the next available thread
 	 */
 	public void createNewRequest() {
+	
 		long totalTicks = (long)(requestTime / 10f + ioTime / 10f + responseTime / 10f);
 		totalTicks *= 60;
-		for (Server s : servers) {
-			for (Thread t : s.getThreads()) {
-				if (t.getRequest() == null) {
-					t.setRequest(new Request(totalTicks, t.getY(), servicePrice));
-					return;
-				}
+		
+		for (Thread t : software.getThreads()) {
+			if (t.getRequest() == null) {
+				t.setRequest(new Request(totalTicks, t.getY(), servicePrice));
+				return;
 			}
 		}
 	}
@@ -146,20 +142,8 @@ public class Player {
 	 */
 	public void optimizeSoftware() {
 		software.optimize();
-		for (Server s : servers) {
-			s.addNewThread();
-		}
 	}
 	
-	/**
-	 * Add a new server
-	 */
-	public void addNewServer() {
-		if (servers.size() < maxServers) {
-			servers.add(new Server(software, servers.size()));
-		}
-	}
-
 	public int getMoney() {
 		return money;
 	}
@@ -184,12 +168,12 @@ public class Player {
 		this.expenses = expenses;
 	}
 
-	public ArrayList<Server> getServers() {
-		return servers;
+	public Server getServer() {
+		return server;
 	}
 
-	public void setServers(ArrayList<Server> servers) {
-		this.servers = servers;
+	public void setServer(Server server) {
+		this.server = server;
 	}
 
 	public Software getSoftware() {

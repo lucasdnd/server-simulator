@@ -1,20 +1,28 @@
 package com.lucasdnd.serversimulator.gameplay;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Software {
 
+	// Status
 	private int features = 0;
+	private ArrayList<Thread> threads;
 	private int optimization = 0;
 	private int bugs = 0;
 	private boolean nonBlockingIO = false;
 	
+	private int totalRequests = 0;
+	private int lostRequests = 0;
+	
 	public static final int maxFeatures = 10;
+	public static final int maxThreads = 30;
 	public static final int maxOptimization = 10;
 	public static final int maxBugs = 10;
 	
 	public Software() {
-		
+		threads = new ArrayList<Thread>();
+		threads.add(new Thread(threads.size()));
 	}
 	
 	public void update() {
@@ -44,6 +52,10 @@ public class Software {
 
 	public int getOptimization() {
 		return optimization;
+	}
+	
+	public ArrayList<Thread> getThreads() {
+		return threads;
 	}
 
 	public int getBugs() {

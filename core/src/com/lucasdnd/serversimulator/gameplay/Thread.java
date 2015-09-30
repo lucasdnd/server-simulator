@@ -18,7 +18,9 @@ public class Thread {
 	private final float serverOffsetY = ServerSimulator.BLOCK_SIZE * 2f;
 	private ShapeRenderer sr;
 	
+	// Game objects
 	private Request request;
+	private boolean busy;
 	
 	public Thread(int id) {
 		this.id = id;
@@ -28,7 +30,11 @@ public class Thread {
 	public void update(ServerSimulator game, float serverY) {
 		
 		if (request != null) {
-			request.update();
+			
+			// Request is going...
+			request.update(game);
+			
+			// Request reached the end!
 			if (request.canDispose()) {
 				
 				int bugs = game.getPlayer().getSoftware().getBugs();
@@ -46,6 +52,7 @@ public class Thread {
 			}
 		}
 		
+		// Update its position on the screen
 		y = serverY - (id * ServerSimulator.BLOCK_SIZE * 2f) - serverOffsetY;
 		
 		float requestTime = game.getPlayer().getRequestTime();
