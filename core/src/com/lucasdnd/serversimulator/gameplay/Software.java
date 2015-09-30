@@ -3,17 +3,22 @@ package com.lucasdnd.serversimulator.gameplay;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * The core mechanics
+ * @author lucasdnd
+ *
+ */
 public class Software {
 
 	// Status
-	private int features = 0;
-	private ArrayList<Thread> threads;
-	private int optimization = 0;
-	private int bugs = 0;
-	private boolean nonBlockingIO = false;
+	private int features = 0;	// Increases demand
+	private ArrayList<Thread> threads;	// Can deal with more requests simultaneously
+	private int optimization = 0;	// Decreases request/io/response times
+	private int bugs = 0;	// Have a chance to happen when implementing new features. Can cause requests to fail
+	private boolean nonBlockingIO = false;	// Sync or async IO
 	
-	private int totalRequests = 0;
-	private int lostRequests = 0;
+	private int totalRequests = 0;	// Total number of requests served
+	private int lostRequests = 0;	// Requests lost due to server busy (no threads available to work)
 	
 	public static final int maxFeatures = 10;
 	public static final int maxThreads = 30;
@@ -22,7 +27,7 @@ public class Software {
 	
 	public Software() {
 		threads = new ArrayList<Thread>();
-		threads.add(new Thread(threads.size()));
+		addNewThread();
 	}
 	
 	public void update() {
@@ -34,6 +39,10 @@ public class Software {
 		if (new Random().nextBoolean()) {
 			bugs++;
 		}
+	}
+	
+	public void addNewThread() {
+		threads.add(new Thread(threads.size()));
 	}
 	
 	public void fixBug() {
@@ -68,5 +77,21 @@ public class Software {
 
 	public void setNonBlockingIO(boolean nonBlockingIO) {
 		this.nonBlockingIO = nonBlockingIO;
+	}
+
+	public int getTotalRequests() {
+		return totalRequests;
+	}
+
+	public void setTotalRequests(int totalRequests) {
+		this.totalRequests = totalRequests;
+	}
+
+	public int getLostRequests() {
+		return lostRequests;
+	}
+
+	public void setLostRequests(int lostRequests) {
+		this.lostRequests = lostRequests;
 	}
 }

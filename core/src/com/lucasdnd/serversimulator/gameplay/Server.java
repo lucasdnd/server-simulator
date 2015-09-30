@@ -7,13 +7,17 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.serversimulator.ServerSimulator;
 import com.lucasdnd.serversimulator.ui.SideBar;
 
+/**
+ * This is just the visual representation of the I/O area on the screen
+ * @author lucasdnd
+ *
+ */
 public class Server {
 	
 	private int id;
 	private float x, y;
 	private float width = ServerSimulator.BLOCK_SIZE * 4f;
-	private final float height = 96f;
-	private final float marginTop = 64f;
+	private float height = 96f;
 	private float lineWeight = ServerSimulator.BLOCK_SIZE;
 	private ShapeRenderer sr;
 	
@@ -24,8 +28,6 @@ public class Server {
 	
 	public void update(ServerSimulator game) {
 		
-		// Drawing stuff
-		
 		// Width: the part inside the Server is the IO time
 		float requestTime = game.getPlayer().getRequestTime();
 		float ioTime = game.getPlayer().getIoTime();
@@ -33,10 +35,10 @@ public class Server {
 		float totalTime = requestTime + ioTime + responseTime;
 		float playableAreaWidth = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH;
 		width = playableAreaWidth * ioTime / totalTime;
+		height = game.getPlayer().getSoftware().getThreads().size() * ServerSimulator.BLOCK_SIZE + (ServerSimulator.BLOCK_SIZE * 2f);
 		
 		x = (Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH) / 2f - (width / 2f);
-		float offsetY = 32f;
-		y = Gdx.graphics.getHeight() - (offsetY / 2f) - (height * id + (offsetY * id)) - marginTop;
+		y = Gdx.graphics.getHeight() / 2f - height / 2f;
 	}
 	
 	public void render(ServerSimulator game) {

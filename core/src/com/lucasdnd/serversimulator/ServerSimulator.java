@@ -86,6 +86,21 @@ public class ServerSimulator extends ApplicationAdapter {
 			
 		});
 		
+		sideBar.getBuyThreadButton().setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				if (player.spendMoney(player.getThreadPrice())) {
+					player.getSoftware().addNewThread();
+				}
+				
+				if (player.getSoftware().getThreads().size() >= Software.maxThreads) {
+					sideBar.getBuyThreadButton().setEnabled(false);
+				}
+			}
+			
+		});
+		
 		sideBar.getOptimizeButton().setClickListener(new ButtonClickListener() {
 
 			@Override
@@ -165,7 +180,8 @@ public class ServerSimulator extends ApplicationAdapter {
 		
 		this.update();
 		
-		Gdx.gl.glClearColor(0.8f, 0.8f, 0.8f, 1);
+//		Gdx.gl.glClearColor(0.8f, 0.8f, 0.8f, 1);
+		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		// UI render
@@ -176,14 +192,19 @@ public class ServerSimulator extends ApplicationAdapter {
 		
 		// Debug
 		if (debug) {
-//			float threadsPerServer = player.getServers().get(0).getThreads().size();
-//			float totalThreads = servers * threadsPerServer;
 			
-			font.drawWhiteFont("demand: " + market.getDemand(), 0f, Gdx.graphics.getHeight() - 0f, false);
-			font.drawWhiteFont("features: " + player.getSoftware().getFeatures(), 0f, Gdx.graphics.getHeight() - 20f, false);
-			font.drawWhiteFont("optimization: " + player.getSoftware().getOptimization(), 0f, Gdx.graphics.getHeight() - 40f, false);
-			font.drawWhiteFont("bugs: " + player.getSoftware().getBugs(), 0f, Gdx.graphics.getHeight() - 60f, false);
-			font.drawWhiteFont("request gen ticks: " + market.getMaxRequestGenerationTicks(), 0f, Gdx.graphics.getHeight() - 100f, false);
+			float offsetY = 20f;
+			for (int i = 0; i < player.getSoftware().getThreads().size(); i++) {
+				com.lucasdnd.serversimulator.gameplay.Thread t = player.getSoftware().getThreads().get(i);
+				font.drawWhiteFont("thread: " + t, 0f, Gdx.graphics.getHeight() - (offsetY * i), false);
+			}
+			
+			font.drawWhiteFont("demand: " + market.getDemand(), 0f, 120f, false);
+			font.drawWhiteFont("features: " + player.getSoftware().getFeatures(), 0f, 100f, false);
+			font.drawWhiteFont("threads: " + player.getSoftware().getThreads().size(), 0f, 80f, false);
+			font.drawWhiteFont("optimization: " + player.getSoftware().getOptimization(), 0f, 60f, false);
+			font.drawWhiteFont("bugs: " + player.getSoftware().getBugs(), 0f, 40f, false);
+			font.drawWhiteFont("request gen ticks: " + market.getMaxRequestGenerationTicks(), 0f, 20f, false);
 			
 //			Request request = player.getServers().get(0).getThreads().get(0).getRequest();
 //			if (request != null) {

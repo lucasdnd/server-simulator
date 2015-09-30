@@ -2,10 +2,13 @@ package com.lucasdnd.serversimulator.gameplay;
 
 import java.util.Random;
 
-import com.badlogic.gdx.Gdx;
 import com.lucasdnd.serversimulator.ServerSimulator;
 
-
+/**
+ * Takes care of when Requests are created, based on the demand
+ * @author lucasdnd
+ *
+ */
 public class Market {
 	
 	private Random r;

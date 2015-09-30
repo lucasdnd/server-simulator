@@ -144,8 +144,8 @@ public class SideBar {
 		font.drawWhiteFont("I/O time: " + printTime(player.getIoTime()),  x + margin, height - margin * 23, true);
 		font.drawWhiteFont("Response time: " + printTime(player.getResponseTime()),  x + margin, height - margin * 25, true);
 		
-		font.drawWhiteFont("Total requests: 3",  x + margin, height - margin * 27, true);
-		font.drawWhiteFont("Lost: 7" + player.getSoftware().getBugs(),  x + margin * 13, height - margin * 27, true);
+		font.drawWhiteFont("Total requests: " + player.getSoftware().getTotalRequests(), x + margin, height - margin * 27, true);
+		font.drawWhiteFont("Lost: " + player.getSoftware().getLostRequests(),  x + margin * 13, height - margin * 27, true);
 		
 		// New, save, load, quit
 		newGameButton.render();
@@ -220,4 +220,9 @@ public class SideBar {
 	public Button getDecreasePriceButton() {
 		return decreasePriceButton;
 	}
+
+	public Button getBuyThreadButton() {
+		return buyThreadButton;
+	}
+	
 }

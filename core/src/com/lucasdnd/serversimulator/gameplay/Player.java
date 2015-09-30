@@ -1,7 +1,5 @@
 package com.lucasdnd.serversimulator.gameplay;
 
-import java.util.ArrayList;
-
 import com.lucasdnd.serversimulator.ServerSimulator;
 
 public class Player {
@@ -28,7 +26,6 @@ public class Player {
 	private int[] threadPrices = {6000, 8000, 10500, 13500, 17000, 21000, 25500, 30500, 36000, 42000};
 	private int[] optimizationPrices = {2000, 4000, 6000, 8000, 10000, 12000, 14000, 16000, 18000, 20000};
 	private int[] bugFixPrices = {3000, 4000, 6000, 9000, 13000, 18000, 24000, 31000, 39000, 48000};
-	private int[] buyServerPrices = {12000, 15000, 18000, 23000};
 	private int asyncIOPrice = 50000;
 	
 	private final int minServicePrice = 50;
