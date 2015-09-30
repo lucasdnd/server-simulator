@@ -85,19 +85,19 @@ public class SideBar {
 		drawBackgroundBar(sr, x, height - margin * 6, barWidth, barHeight - 12f);
 		font.drawBlackFont("Software",  x + margin, height - margin * 5, true);
 		newFeaturesButton.render();
-		font.drawWhiteFont("$ 30: New features",  x + margin * 4, height - margin * 7, true);
+		font.drawWhiteFont(printMoney(player.getFeaturesPrice()) + ": New features",  x + margin * 4, height - margin * 7, true);
 		optimizeButton.render();
-		font.drawWhiteFont("$ 20: Optimize",  x + margin * 4, height - margin * 9, true);
+		font.drawWhiteFont(printMoney(player.getOptimizationPrice()) + ": Optimize",  x + margin * 4, height - margin * 9, true);
 		bugFixButton.render();
-		font.drawWhiteFont("$ 10: Fix a bug",  x + margin * 4, height - margin * 11, true);
+		font.drawWhiteFont(printMoney(player.getBugFixPrice()) + ": Fix a bug",  x + margin * 4, height - margin * 11, true);
 		asyncIOButton.render();
-		font.drawWhiteFont("$ 500: Async I/O",  x + margin * 4, height - margin * 13, true);
+		font.drawWhiteFont(printMoney(player.getAsyncIOPrice()) + ": Async I/O",  x + margin * 4, height - margin * 13, true);
 		
 		// Hardware
 		drawBackgroundBar(sr, x, height - margin * 16, barWidth, barHeight - 12f);
 		font.drawBlackFont("Hardware",  x + margin, height - margin * 15, true);
 		buyServerButton.render();
-		font.drawWhiteFont("$ 60: Buy Server",  x + margin * 4, height - margin * 17, true);
+		font.drawWhiteFont(printMoney(player.getBuyServerPrice()) + ": Buy Server",  x + margin * 4, height - margin * 17, true);
 		
 		// Status
 		drawBackgroundBar(sr, x, height - margin * 20, barWidth, barHeight - 12f);

@@ -2,10 +2,12 @@ package com.lucasdnd.serversimulator.gameplay;
 
 import java.util.ArrayList;
 
+import com.lucasdnd.serversimulator.ServerSimulator;
+
 public class Player {
 	
 	// Status
-	private int money = 10000;
+	private int money = 100000000;
 	private int servicePrice = 100;
 	private int expenses;
 	
@@ -22,10 +24,11 @@ public class Player {
 	private final int maxServers = 5;
 	
 	// Use some better curves here
-	private int[] featuresPrices = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-	private int[] optimizationPrices = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-	private int[] bugFixPrices = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-	private int[] buyServerPrices = {0, 0, 0, 0};
+	private int[] featuresPrices = {6000, 8000, 10500, 13500, 17000, 21000, 25500, 30500, 36000, 42000};
+	private int[] optimizationPrices = {2000, 4000, 6000, 8000, 10000, 12000, 14000, 16000, 18000, 20000};
+	private int[] bugFixPrices = {3000, 4000, 6000, 9000, 13000, 18000, 24000, 31000, 39000, 48000};
+	private int[] buyServerPrices = {12000, 15000, 18000, 23000};
+	private int asyncIOPrice = 50000;
 	
 	public Player() {
 		this.servers = new ArrayList<Server>();
@@ -33,10 +36,10 @@ public class Player {
 		addNewServer();
 	}
 	
-	public void update() {
+	public void update(ServerSimulator game) {
 		software.update();
 		for (Server s : servers) {
-			s.update();
+			s.update(game);
 		}
 	}
 	
@@ -52,6 +55,10 @@ public class Player {
 	 */
 	public void earnMoney(int value) {
 		money += value;
+	}
+	
+	public void earnServiceMoney() {
+		money += servicePrice;
 	}
 	
 	/**
@@ -71,15 +78,33 @@ public class Player {
 	 * The price of stuff 
 	 */
 	public int getFeaturesPrice() {
+		if (software.getFeatures() >= featuresPrices.length) {
+			return 0;
+		}
 		return featuresPrices[software.getFeatures()];
 	}
 	public int getOptimizationPrice() {
+		if (software.getOptimization() >= optimizationPrices.length) {
+			return 0;
+		}
 		return optimizationPrices[software.getOptimization()];
 	}
 	public int getBugFixPrice() {
+		if (software.getBugs() >= bugFixPrices.length) {
+			return 0;
+		}
 		return bugFixPrices[software.getBugs()];
 	}
+	public int getAsyncIOPrice() {
+		if (software.isNonBlockingIO()) {
+			return 0;
+		}
+		return asyncIOPrice;
+	}
 	public int getBuyServerPrice() {
+		if (servers.size() >= buyServerPrices.length) {
+			return 0;
+		}
 		return buyServerPrices[servers.size()];
 	}
 	

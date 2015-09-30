@@ -59,9 +59,9 @@ public class ServerSimulator extends ApplicationAdapter {
 
 			@Override
 			public void onClick() {
-				
-				// TODO: spend money
-				player.getSoftware().addFeatures();
+				if (player.spendMoney(player.getFeaturesPrice())) {
+					player.getSoftware().addFeatures();
+				}
 			}
 			
 		});
@@ -70,7 +70,9 @@ public class ServerSimulator extends ApplicationAdapter {
 
 			@Override
 			public void onClick() {
-				player.optimizeSoftware();
+				if (player.spendMoney(player.getOptimizationPrice())) {
+					player.optimizeSoftware();
+				}
 			}
 			
 		});
@@ -79,7 +81,9 @@ public class ServerSimulator extends ApplicationAdapter {
 
 			@Override
 			public void onClick() {
-				player.getSoftware().fixBug();
+				if (player.spendMoney(player.getBugFixPrice())) {
+					player.getSoftware().fixBug();
+				}
 			}
 			
 		});
@@ -88,7 +92,9 @@ public class ServerSimulator extends ApplicationAdapter {
 
 			@Override
 			public void onClick() {
-				player.getSoftware().setNonBlockingIO(true);
+				if (player.spendMoney(player.getAsyncIOPrice())) {
+					player.getSoftware().setNonBlockingIO(true);
+				}
 			}
 			
 		});
@@ -97,7 +103,9 @@ public class ServerSimulator extends ApplicationAdapter {
 
 			@Override
 			public void onClick() {
-				player.addNewServer();
+				if (player.spendMoney(player.getServicePrice())) {
+					player.addNewServer();
+				}
 			}
 			
 		});
@@ -132,7 +140,7 @@ public class ServerSimulator extends ApplicationAdapter {
 		
 		// Game objects
 		market.update(player.getSoftware().getFeatures());
-		player.update();
+		player.update(this);
 		
 		inputHandler.refreshMouseClicks();
 	}
@@ -142,7 +150,7 @@ public class ServerSimulator extends ApplicationAdapter {
 		
 		this.update();
 		
-		Gdx.gl.glClearColor(0, 0.5f, 0, 1);
+		Gdx.gl.glClearColor(0.8f, 0.8f, 0.8f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		// UI render

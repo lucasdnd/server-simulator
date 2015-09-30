@@ -21,11 +21,12 @@ public class Thread {
 		sr = new ShapeRenderer();
 	}
 	
-	public void update(float serverY) {
+	public void update(ServerSimulator game, float serverY) {
 		
 		if (request != null) {
 			request.update();
 			if (request.canDispose()) {
+				game.getPlayer().earnServiceMoney();
 				request = null;
 			}
 		}

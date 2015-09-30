@@ -32,7 +32,7 @@ public class Server {
 		}
 	}
 	
-	public void update() {
+	public void update(ServerSimulator game) {
 		
 		// Drawing stuff
 		width = height;
@@ -42,17 +42,17 @@ public class Server {
 		
 		// Threads
 		for (Thread t : threads) {
-			t.update(y);
+			t.update(game, y);
 		}
 	}
 	
 	public void render() {
 		
-		drawRectFrame();
-		
 		for (Thread t : threads) {
 			t.render(y);
 		}
+		
+		drawRectFrame();
 	}
 	
 	public void addNewThread() {
