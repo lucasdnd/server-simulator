@@ -175,7 +175,7 @@ public class ServerSimulator extends ApplicationAdapter {
 		sideBar.update();
 		
 		// Game objects
-		market.update(player.getSoftware().getFeatures());
+		market.update(this);
 		player.update(this);
 		
 		inputHandler.refreshMouseClicks();

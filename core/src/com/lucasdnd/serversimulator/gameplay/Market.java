@@ -17,9 +17,10 @@ public class Market {
 		r = new Random();
 	}
 	
-	public void update(int features) {
+	public void update(ServerSimulator game) {
 		
 		// Demand update
+		int features = game.getPlayer().getSoftware().getFeatures();
 		demand = ((float)features + 1) * 0.1f;
 		
 		maxRequestGenerationTicks = (long)(60f / demand * 10f / 100f);
@@ -28,7 +29,7 @@ public class Market {
 		requestGenerationTicks++;
 		if (requestGenerationTicks % maxRequestGenerationTicks == 0) {
 			if (r.nextFloat() <= demand) {
-				((ServerSimulator)Gdx.app.getApplicationListener()).getPlayer().createNewRequest();
+				game.getPlayer().createNewRequest();
 			}
 		}
 	}

@@ -42,8 +42,8 @@ public class SideBar {
 		final float buttonHeight = 24f;
 		final float buttonTextPaddingY = 2f;
 		
-		increasePriceButton = new Button("+", this.x + margin * 17, margin * 29, buttonHeight, buttonTextPaddingY);
-		decreasePriceButton = new Button("-", this.x + margin * 15, margin * 29, buttonHeight, buttonTextPaddingY);
+		increasePriceButton = new Button("+", this.x + margin * 17, height - margin * 3, buttonHeight, buttonTextPaddingY);
+		decreasePriceButton = new Button("-", this.x + margin * 15, height - margin * 3, buttonHeight, buttonTextPaddingY);
 		
 		newFeaturesButton = new Button("+", this.x + margin, height - margin * 7, buttonHeight, buttonTextPaddingY);
 		optimizeButton = new Button("+", this.x + margin, height - margin * 9, buttonHeight, buttonTextPaddingY);
