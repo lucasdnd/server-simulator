@@ -1,5 +1,7 @@
 package com.lucasdnd.serversimulator.gameplay;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -26,8 +28,19 @@ public class Thread {
 		if (request != null) {
 			request.update();
 			if (request.canDispose()) {
-				game.getPlayer().earnServiceMoney();
-				request = null;
+				
+				int bugs = game.getPlayer().getSoftware().getBugs();
+				if (bugs > 0 && new Random().nextInt(100) <= Math.pow(bugs, 2)) {
+					
+					// BUG! No money
+					request = null;
+					
+				} else {
+					
+					// $$$
+					game.getPlayer().earnServiceMoney();
+					request = null;
+				}
 			}
 		}
 		

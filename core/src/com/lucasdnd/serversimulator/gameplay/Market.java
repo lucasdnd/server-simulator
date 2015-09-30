@@ -22,6 +22,8 @@ public class Market {
 		// Demand update
 		demand = ((float)features + 1) * 0.1f;
 		
+		maxRequestGenerationTicks = (long)(60f / demand * 10f / 100f);
+		
 		// Request generation
 		requestGenerationTicks++;
 		if (requestGenerationTicks % maxRequestGenerationTicks == 0) {
@@ -33,6 +35,10 @@ public class Market {
 	
 	public float getDemand() {
 		return demand;
+	}
+	
+	public long getMaxRequestGenerationTicks() {
+		return maxRequestGenerationTicks;
 	}
 	
 }

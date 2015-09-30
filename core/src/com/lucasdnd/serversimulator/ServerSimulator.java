@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.serversimulator.gameplay.Market;
 import com.lucasdnd.serversimulator.gameplay.Player;
-import com.lucasdnd.serversimulator.gameplay.Request;
 import com.lucasdnd.serversimulator.gameplay.Software;
 import com.lucasdnd.serversimulator.ui.ButtonClickListener;
 import com.lucasdnd.serversimulator.ui.SideBar;
@@ -187,10 +186,13 @@ public class ServerSimulator extends ApplicationAdapter {
 			float servers = player.getServers().size();
 			float threadsPerServer = player.getServers().get(0).getThreads().size();
 			float totalThreads = servers * threadsPerServer;
-			font.drawWhiteFont("servers: " + servers, 0f, Gdx.graphics.getHeight(), false);
+			
+			font.drawWhiteFont("demand: " + market.getDemand(), 0f, Gdx.graphics.getHeight() - 0f, false);
 			font.drawWhiteFont("features: " + player.getSoftware().getFeatures(), 0f, Gdx.graphics.getHeight() - 20f, false);
-			font.drawWhiteFont("demand: " + market.getDemand(), 0f, Gdx.graphics.getHeight() - 40f, false);
-			font.drawWhiteFont("optimization: " + player.getSoftware().getOptimization(), 0f, Gdx.graphics.getHeight() - 60f, false);
+			font.drawWhiteFont("optimization: " + player.getSoftware().getOptimization(), 0f, Gdx.graphics.getHeight() - 40f, false);
+			font.drawWhiteFont("bugs: " + player.getSoftware().getBugs(), 0f, Gdx.graphics.getHeight() - 60f, false);
+			font.drawWhiteFont("servers: " + servers, 0f, Gdx.graphics.getHeight() - 80f, false);
+			font.drawWhiteFont("request gen ticks: " + market.getMaxRequestGenerationTicks(), 0f, Gdx.graphics.getHeight() - 100f, false);
 			
 //			Request request = player.getServers().get(0).getThreads().get(0).getRequest();
 //			if (request != null) {
