@@ -2,10 +2,12 @@ package com.lucasdnd.serversimulator.gameplay;
 
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.serversimulator.ServerSimulator;
+import com.lucasdnd.serversimulator.ui.SideBar;
 
 public class Thread {
 	
@@ -44,23 +46,30 @@ public class Thread {
 			}
 		}
 		
-		float b = ServerSimulator.BLOCK_SIZE;
-		y = serverY - (id * b * 2f) - serverOffsetY;
+		y = serverY - (id * ServerSimulator.BLOCK_SIZE * 2f) - serverOffsetY;
 		
-		requestWidth = b * 32f;
-		ioWidth = b * 32f;
-		responseWidth = b * 14f;
+		float requestTime = game.getPlayer().getRequestTime();
+		float ioTime = game.getPlayer().getIoTime();
+		float responseTime = game.getPlayer().getResponseTime();
+		float totalTime = requestTime + ioTime + responseTime;
+		
+		float playableAreaWidth = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH;
+		
+		requestWidth = playableAreaWidth * requestTime / totalTime;
+		ioWidth = playableAreaWidth * ioTime / totalTime;
+		responseWidth = playableAreaWidth * responseTime / totalTime;
 	}
 	
 	public void render(float serverY) {
+		
 		sr.begin(ShapeType.Filled);
 		
 		// Request line
-		sr.setColor(Color.GOLD);
+		sr.setColor(Color.CORAL);
 		sr.rect(x, y, requestWidth, height);
 		
 		// I/O line
-		sr.setColor(Color.CYAN);
+		sr.setColor(Color.GREEN);
 		sr.rect(requestWidth, y, ioWidth, height);
 		
 		// Response line

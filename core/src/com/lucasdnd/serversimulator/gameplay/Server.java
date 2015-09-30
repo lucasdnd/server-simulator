@@ -35,7 +35,15 @@ public class Server {
 	public void update(ServerSimulator game) {
 		
 		// Drawing stuff
-		width = height;
+		
+		// Width: the part inside the Server is the IO time
+		float requestTime = game.getPlayer().getRequestTime();
+		float ioTime = game.getPlayer().getIoTime();
+		float responseTime = game.getPlayer().getResponseTime();
+		float totalTime = requestTime + ioTime + responseTime;
+		float playableAreaWidth = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH;
+		width = playableAreaWidth * ioTime / totalTime;
+		
 		x = (Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH) / 2f - (width / 2f);
 		float offsetY = 32f;
 		y = Gdx.graphics.getHeight() - (offsetY / 2f) - (height * id + (offsetY * id));

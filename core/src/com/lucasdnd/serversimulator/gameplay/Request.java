@@ -36,7 +36,7 @@ public class Request {
 	
 	public void render() {
 		sr.begin(ShapeType.Filled);
-		sr.setColor(Color.RED);
+		sr.setColor(Color.BLACK);
 		sr.rect(x, y, width, height);
 		sr.end();
 	}
