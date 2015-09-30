@@ -38,7 +38,7 @@ public class Server {
 		height = game.getPlayer().getSoftware().getThreads().size() * ServerSimulator.BLOCK_SIZE + (ServerSimulator.BLOCK_SIZE * 2f);
 		
 		x = (Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH) / 2f - (width / 2f);
-		y = Gdx.graphics.getHeight() / 2f - height / 2f;
+		y = Gdx.graphics.getHeight() / 2f + height / 2f;
 	}
 	
 	public void render(ServerSimulator game) {

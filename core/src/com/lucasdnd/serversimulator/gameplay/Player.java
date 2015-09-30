@@ -22,8 +22,8 @@ public class Player {
 	public static final int maxServers = 5;
 	
 	// Use some better curves here
-	private int[] featuresPrices = {6000, 8000, 10500, 13500, 17000, 21000, 25500, 30500, 36000, 42000};
-	private int[] threadPrices = {6000, 8000, 10500, 13500, 17000, 21000, 25500, 30500, 36000, 42000};
+	private int[] featuresPrices = {5000, 7000, 10000, 13000, 17000, 21000, 25000, 30000, 35000, 40000};
+	private int[] threadPrices = {5000, 7000, 10000, 13000, 17000, 21000, 25000, 30000, 35000, 40000};
 	private int[] optimizationPrices = {2000, 4000, 6000, 8000, 10000, 12000, 14000, 16000, 18000, 20000};
 	private int[] bugFixPrices = {3000, 4000, 6000, 9000, 13000, 18000, 24000, 31000, 39000, 48000};
 	private int asyncIOPrice = 50000;
@@ -108,6 +108,8 @@ public class Player {
 	public int getThreadPrice() {
 		if (software.getThreads().size() >= Software.maxThreads) {
 			return 0;
+		} else if (software.getThreads().size() >= threadPrices.length) {
+			return threadPrices[threadPrices.length - 1];
 		}
 		return threadPrices[software.getThreads().size() - 1];
 	}
