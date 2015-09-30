@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.serversimulator.FontUtils;
 import com.lucasdnd.serversimulator.ServerSimulator;
 import com.lucasdnd.serversimulator.gameplay.Player;
+import com.lucasdnd.serversimulator.gameplay.Software;
 
 public class SideBar {
 	private int x, y;
@@ -84,20 +85,45 @@ public class SideBar {
 		// Software
 		drawBackgroundBar(sr, x, height - margin * 6, barWidth, barHeight - 12f);
 		font.drawBlackFont("Software",  x + margin, height - margin * 5, true);
+		
 		newFeaturesButton.render();
-		font.drawWhiteFont(printMoney(player.getFeaturesPrice()) + ": New features",  x + margin * 4, height - margin * 7, true);
+		if (player.getSoftware().getFeatures() >= Software.maxFeatures) {
+			font.drawWhiteFont("Features at maximum",  x + margin * 4, height - margin * 7, true);
+		} else {
+			font.drawWhiteFont(printMoney(player.getFeaturesPrice()) + ": New features",  x + margin * 4, height - margin * 7, true);
+		}
+		
 		optimizeButton.render();
-		font.drawWhiteFont(printMoney(player.getOptimizationPrice()) + ": Optimize",  x + margin * 4, height - margin * 9, true);
+		if (player.getSoftware().getOptimization() >= Software.maxOptimization) {
+			font.drawWhiteFont("Optimization at maximum",  x + margin * 4, height - margin * 9, true);
+		} else {
+			font.drawWhiteFont(printMoney(player.getOptimizationPrice()) + ": Optimize",  x + margin * 4, height - margin * 9, true);
+		}
+		
 		bugFixButton.render();
-		font.drawWhiteFont(printMoney(player.getBugFixPrice()) + ": Fix a bug",  x + margin * 4, height - margin * 11, true);
+		if (player.getSoftware().getBugs() == 0) {
+			font.drawWhiteFont("No bugs to fix",  x + margin * 4, height - margin * 11, true);
+		} else {
+			font.drawWhiteFont(printMoney(player.getBugFixPrice()) + ": Fix a bug",  x + margin * 4, height - margin * 11, true);
+		}
+		
 		asyncIOButton.render();
-		font.drawWhiteFont(printMoney(player.getAsyncIOPrice()) + ": Async I/O",  x + margin * 4, height - margin * 13, true);
+		if (player.getSoftware().isNonBlockingIO()) {
+			font.drawWhiteFont("Already async IO",  x + margin * 4, height - margin * 13, true);
+		} else {
+			font.drawWhiteFont(printMoney(player.getAsyncIOPrice()) + ": Async I/O",  x + margin * 4, height - margin * 13, true);
+		}
 		
 		// Hardware
 		drawBackgroundBar(sr, x, height - margin * 16, barWidth, barHeight - 12f);
 		font.drawBlackFont("Hardware",  x + margin, height - margin * 15, true);
+		
 		buyServerButton.render();
-		font.drawWhiteFont(printMoney(player.getBuyServerPrice()) + ": Buy Server",  x + margin * 4, height - margin * 17, true);
+		if (player.getServers().size() >= Player.maxServers) {
+			font.drawWhiteFont("Can't buy any more servers",  x + margin * 4, height - margin * 17, true);
+		} else {
+			font.drawWhiteFont(printMoney(player.getBuyServerPrice()) + ": Buy Server",  x + margin * 4, height - margin * 17, true);
+		}
 		
 		// Status
 		drawBackgroundBar(sr, x, height - margin * 20, barWidth, barHeight - 12f);

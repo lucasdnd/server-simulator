@@ -18,7 +18,7 @@ public class Server {
 	private float lineWeight = ServerSimulator.BLOCK_SIZE;
 	private ShapeRenderer sr;
 	
-	private final float maxThreads = 5;
+	public final static int maxThreads = 5;
 	private ArrayList<Thread> threads;
 	
 	public Server(Software software, int id) {

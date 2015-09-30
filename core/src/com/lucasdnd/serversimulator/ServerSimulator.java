@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.serversimulator.gameplay.Market;
 import com.lucasdnd.serversimulator.gameplay.Player;
 import com.lucasdnd.serversimulator.gameplay.Request;
+import com.lucasdnd.serversimulator.gameplay.Software;
 import com.lucasdnd.serversimulator.ui.ButtonClickListener;
 import com.lucasdnd.serversimulator.ui.SideBar;
 
@@ -62,6 +63,12 @@ public class ServerSimulator extends ApplicationAdapter {
 				if (player.spendMoney(player.getFeaturesPrice())) {
 					player.getSoftware().addFeatures();
 				}
+				
+				if (player.getSoftware().getFeatures() >= Software.maxFeatures) {
+					sideBar.getNewFeaturesButton().setEnabled(false);
+				}
+				
+				updateBugFixButtonState();
 			}
 			
 		});
@@ -73,10 +80,15 @@ public class ServerSimulator extends ApplicationAdapter {
 				if (player.spendMoney(player.getOptimizationPrice())) {
 					player.optimizeSoftware();
 				}
+				
+				if (player.getSoftware().getOptimization() >= Software.maxOptimization) {
+					sideBar.getOptimizeButton().setEnabled(false);
+				}
 			}
 			
 		});
 		
+		updateBugFixButtonState();
 		sideBar.getBugFixButton().setClickListener(new ButtonClickListener() {
 
 			@Override
@@ -84,6 +96,8 @@ public class ServerSimulator extends ApplicationAdapter {
 				if (player.spendMoney(player.getBugFixPrice())) {
 					player.getSoftware().fixBug();
 				}
+				
+				updateBugFixButtonState();
 			}
 			
 		});
@@ -95,6 +109,8 @@ public class ServerSimulator extends ApplicationAdapter {
 				if (player.spendMoney(player.getAsyncIOPrice())) {
 					player.getSoftware().setNonBlockingIO(true);
 				}
+				
+				sideBar.getAsyncIOButton().setEnabled(player.getSoftware().isNonBlockingIO() == false);
 			}
 			
 		});
@@ -106,10 +122,17 @@ public class ServerSimulator extends ApplicationAdapter {
 				if (player.spendMoney(player.getServicePrice())) {
 					player.addNewServer();
 				}
+				
+				if (player.getServers().size() >= Player.maxServers) {
+					sideBar.getBuyServerButton().setEnabled(false);
+				}
 			}
 			
 		});
-		
+	}
+	
+	private void updateBugFixButtonState() {
+		sideBar.getBugFixButton().setEnabled(player.getSoftware().getBugs() != 0);
 	}
 	
 	private void handleInput() {

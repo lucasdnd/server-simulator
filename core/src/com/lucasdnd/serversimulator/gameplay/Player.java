@@ -21,7 +21,7 @@ public class Player {
 	private Software software;
 	
 	// Settings and stuff
-	private final int maxServers = 5;
+	public static final int maxServers = 5;
 	
 	// Use some better curves here
 	private int[] featuresPrices = {6000, 8000, 10500, 13500, 17000, 21000, 25500, 30500, 36000, 42000};
@@ -102,10 +102,10 @@ public class Player {
 		return asyncIOPrice;
 	}
 	public int getBuyServerPrice() {
-		if (servers.size() >= buyServerPrices.length) {
+		if (servers.size() > buyServerPrices.length) {
 			return 0;
 		}
-		return buyServerPrices[servers.size()];
+		return buyServerPrices[servers.size() - 1];
 	}
 	
 	/**

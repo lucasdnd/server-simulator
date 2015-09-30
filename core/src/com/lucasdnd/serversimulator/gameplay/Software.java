@@ -9,6 +9,10 @@ public class Software {
 	private int bugs = 0;
 	private boolean nonBlockingIO = false;
 	
+	public static final int maxFeatures = 10;
+	public static final int maxOptimization = 10;
+	public static final int maxBugs = 10;
+	
 	public Software() {
 		
 	}
