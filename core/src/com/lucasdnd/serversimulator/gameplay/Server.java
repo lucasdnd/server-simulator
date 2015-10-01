@@ -1,5 +1,7 @@
 package com.lucasdnd.serversimulator.gameplay;
 
+import java.util.LinkedList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -14,19 +16,32 @@ import com.lucasdnd.serversimulator.ui.SideBar;
  */
 public class Server {
 	
-	private int id;
 	private float x, y;
 	private float width = ServerSimulator.BLOCK_SIZE * 4f;
 	private float height = 96f;
 	private float lineWeight = ServerSimulator.BLOCK_SIZE;
 	private ShapeRenderer sr;
 	
-	public Server(Software software, int id) {
-		this.id = id;
+	/**
+	 * Tells if this Server is performing an IO operation.
+	 * In sync IO mode, the current request will remain in the Thread until the Server is free to perform
+	 * the requered IO.
+	 * In async IO, this attribute can be ignored as these operations can be executed simultaneously.
+	 */
+	private boolean performingIO;
+	private LinkedList<Request> requests;
+	
+	public Server(Software software) {
 		sr = new ShapeRenderer();
+		requests = new LinkedList<Request>();
 	}
 	
 	public void update(ServerSimulator game) {
+		
+		// Update its requests
+		for (Request r : requests) {
+			r.update(game, y);
+		}
 		
 		// Width: the part inside the Server is the IO time
 		float requestTime = game.getPlayer().getRequestTime();
@@ -73,5 +88,17 @@ public class Server {
 		sr.rect(x, y - lineHeight, lineWidth, lineWeight); 
 		
 		sr.end();
+	}
+	
+	public boolean isPerformingIO() {
+		return performingIO;
+	}
+	
+	public LinkedList<Request> getRequests() {
+		return requests;
+	}
+
+	public float getY() {
+		return y;
 	}
 }

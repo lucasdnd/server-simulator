@@ -16,8 +16,15 @@ public class Request {
 	private ShapeRenderer sr;
 	
 	private int priceToPay;	// A snapshot of the price when the request was created
+	private boolean dispose; // Mark this request to be disposed
 	
-	private boolean dispose;
+	// Current Request state
+	private int state = 0;
+	public final static int REQUEST = 0;
+	public final static int WAITING_FOR_IO = 1;
+	public final static int IO = 2;
+	public final static int WAITING_FOR_RESPONSE = 3;
+	public final static int RESPONSE = 4;
 	
 	public Request(long totalTicks, float y, int priceToPay) {
 		sr = new ShapeRenderer();
@@ -27,7 +34,12 @@ public class Request {
 		this.priceToPay = priceToPay;
 	}
 	
-	public void update(ServerSimulator game) {
+	public void update(ServerSimulator game, float threadY) {
+		
+		// Waiting: do nothing
+		if (state == WAITING_FOR_IO || state == WAITING_FOR_RESPONSE) {
+			return;
+		}
 		
 		// Move it
 		ticks++;
@@ -35,14 +47,22 @@ public class Request {
 		// Update its position on the screen
 		float playableAreaWidth = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH - width;
 		x = (playableAreaWidth * ticks) / totalTicks;
+		y = threadY;
 		if (ticks >= totalTicks) {
 			dispose = true;
+		}
+		
+		// Check it
+		if (state == REQUEST) {
+			if (ticks >= game.getPlayer().getRequestTicks()) {
+				state = WAITING_FOR_IO;
+			}
 		}
 	}
 	
 	public void render() {
 		sr.begin(ShapeType.Filled);
-		sr.setColor(Color.BLACK);
+		sr.setColor(Color.RED);
 		sr.rect(x, y, width, height);
 		sr.end();
 	}
@@ -61,5 +81,9 @@ public class Request {
 	
 	public int getPriceToPay() {
 		return priceToPay;
+	}
+	
+	public int getState() {
+		return state;
 	}
 }

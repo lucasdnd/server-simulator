@@ -193,12 +193,28 @@ public class ServerSimulator extends ApplicationAdapter {
 		// Debug
 		if (debug) {
 			
-			float offsetY = 20f;
+			// Threads
+			float offsetY = 0f;
 			for (int i = 0; i < player.getSoftware().getThreads().size(); i++) {
 				com.lucasdnd.serversimulator.gameplay.Thread t = player.getSoftware().getThreads().get(i);
-				font.drawWhiteFont("thread: " + t, 0f, Gdx.graphics.getHeight() - (offsetY * i), false);
+				if (t.getRequest() == null) {
+					font.drawWhiteFont("thread " + i + ": no requests", 0f, Gdx.graphics.getHeight() - offsetY, false);
+				} else {
+					font.drawWhiteFont("thread " + i + ": " + t.getRequest().getState(), 0f, Gdx.graphics.getHeight() - offsetY, false);
+				}
+				
+				offsetY += 20f;
 			}
 			
+			// Requests
+			for (com.lucasdnd.serversimulator.gameplay.Thread t : player.getSoftware().getThreads()) {
+				if (t.getRequest() != null) {
+					font.drawWhiteFont("request state: " + t.getRequest().getState() + ", ticks: " + t.getRequest().getTicks(), 0f, Gdx.graphics.getHeight() - offsetY, false);
+					offsetY += 20f;
+				}
+			}
+			
+			// General stats
 			font.drawWhiteFont("demand: " + market.getDemand(), 0f, 120f, false);
 			font.drawWhiteFont("features: " + player.getSoftware().getFeatures(), 0f, 100f, false);
 			font.drawWhiteFont("threads: " + player.getSoftware().getThreads().size(), 0f, 80f, false);

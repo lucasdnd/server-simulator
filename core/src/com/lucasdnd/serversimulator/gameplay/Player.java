@@ -33,16 +33,17 @@ public class Player {
 	
 	public Player() {
 		this.software = new Software();
-		this.server = new Server(software, 0);
+		this.server = new Server(software);
 	}
 	
 	public void update(ServerSimulator game) {
-		software.update();
-		server.update(game);;
+		software.update(game);
+		server.update(game);
 	}
 	
 	public void render(ServerSimulator game) {
 		server.render(game);
+		software.render(game);
 	}
 	
 	public void increaseServicePrice() {
@@ -125,15 +126,21 @@ public class Player {
 	 */
 	public void createNewRequest() {
 	
+		// Total time the request needs to complete
 		long totalTicks = (long)(requestTime / 10f + ioTime / 10f + responseTime / 10f);
 		totalTicks *= 60;
 		
+		// Get a free thread for the new Request
 		for (Thread t : software.getThreads()) {
 			if (t.getRequest() == null) {
+				t.setY(100f);
 				t.setRequest(new Request(totalTicks, t.getY(), servicePrice));
 				return;
 			}
 		}
+		
+		// If none are found, increment the lost requests
+		software.incrementLostRequests();
 	}
 	
 	/**
@@ -182,6 +189,10 @@ public class Player {
 	public int getRequestTime() {
 		return requestTime;
 	}
+	
+	public int getRequestTicks() {
+		return requestTime * 6;
+	}
 
 	public void setRequestTime(int requestTime) {
 		this.requestTime = requestTime;
@@ -190,6 +201,10 @@ public class Player {
 	public int getIoTime() {
 		return ioTime;
 	}
+	
+	public int getIoTicks() {
+		return ioTime * 6;
+	}
 
 	public void setIoTime(int ioTime) {
 		this.ioTime = ioTime;
@@ -197,6 +212,10 @@ public class Player {
 
 	public int getResponseTime() {
 		return responseTime;
+	}
+	
+	public int getResponseTicks() {
+		return responseTime * 6;
 	}
 
 	public void setResponseTime(int responseTime) {

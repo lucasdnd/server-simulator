@@ -20,7 +20,6 @@ public class Thread {
 	
 	// Game objects
 	private Request request;
-	private boolean busy;
 	
 	public Thread(int id) {
 		this.id = id;
@@ -32,7 +31,7 @@ public class Thread {
 		if (request != null) {
 			
 			// Request is going...
-			request.update(game);
+			request.update(game, y);
 			
 			// Request reached the end!
 			if (request.canDispose()) {
@@ -67,25 +66,27 @@ public class Thread {
 		responseWidth = playableAreaWidth * responseTime / totalTime;
 	}
 	
-	public void render(float serverY) {
-		
-		sr.begin(ShapeType.Filled);
-		
-		// Request line
-		sr.setColor(Color.CORAL);
-		sr.rect(x, y, requestWidth, height);
-		
-		// I/O line
-		sr.setColor(Color.GREEN);
-		sr.rect(requestWidth, y, ioWidth, height);
-		
-		// Response line
-		sr.setColor(Color.CORAL);
-		sr.rect(requestWidth + ioWidth, y, responseWidth, height);
-		
-		sr.end();
+	public void render() {
 		
 		if (request != null) {
+			
+			sr.begin(ShapeType.Filled);
+			
+			if (request.getState() == Request.REQUEST) {
+				sr.setColor(Color.CORAL);
+				sr.rect(x, y, requestWidth, height);
+			} else if (request.getState() == Request.IO) {
+				sr.setColor(Color.GREEN);
+				sr.rect(requestWidth, y, ioWidth, height);				
+			} else if (request.getState() == Request.RESPONSE) {
+				sr.setColor(Color.CORAL);
+				sr.rect(requestWidth + ioWidth, y, responseWidth, height);
+				
+			}
+			
+			sr.end();
+		
+			// Render the Request dot
 			request.render();
 		}
 	}
@@ -100,5 +101,9 @@ public class Thread {
 	
 	public float getY() {
 		return y;
+	}
+
+	public void setY(float y) {
+		this.y = y;
 	}
 }

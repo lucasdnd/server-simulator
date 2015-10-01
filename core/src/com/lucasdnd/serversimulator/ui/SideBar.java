@@ -137,7 +137,7 @@ public class SideBar {
 		drawBackgroundBar(sr, x, height - margin * 18, barWidth, barHeight - 12f);
 		font.drawBlackFont("Status",  x + margin, height - margin * 17, true);
 		
-		font.drawWhiteFont("Threads: " + (player.getSoftware().getOptimization() + 1),  x + margin, height - margin * 19, true);
+		font.drawWhiteFont("Threads: " + player.getSoftware().getFreeThreads() + "/" + (player.getSoftware().getOptimization() + 1),  x + margin, height - margin * 19, true);
 		font.drawWhiteFont("Bugs: " + player.getSoftware().getBugs(),  x + margin * 13, height - margin * 19, true);
 		
 		font.drawWhiteFont("Request time: " + printTime(player.getRequestTime()),  x + margin, height - margin * 21, true);

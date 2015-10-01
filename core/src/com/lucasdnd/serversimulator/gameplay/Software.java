@@ -3,6 +3,8 @@ package com.lucasdnd.serversimulator.gameplay;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.lucasdnd.serversimulator.ServerSimulator;
+
 /**
  * The core mechanics
  * @author lucasdnd
@@ -30,8 +32,16 @@ public class Software {
 		addNewThread();
 	}
 	
-	public void update() {
-		
+	public void update(ServerSimulator game) {
+		for (Thread t : threads) {
+			t.update(game, game.getPlayer().getServer().getY());
+		}
+	}
+	
+	public void render(ServerSimulator game) {
+		for (Thread t : threads) {
+			t.render();
+		}
 	}
 	
 	public void addFeatures() {
@@ -49,6 +59,16 @@ public class Software {
 		if (bugs > 0) {
 			bugs--;
 		}
+	}
+	
+	public int getFreeThreads() {
+		int freeThreads = 0;
+		for (Thread t : threads) {
+			if (t.getRequest() == null) {
+				freeThreads++;
+			}
+		}
+		return freeThreads;
 	}
 	
 	public void optimize() {
@@ -89,6 +109,10 @@ public class Software {
 
 	public int getLostRequests() {
 		return lostRequests;
+	}
+	
+	public void incrementLostRequests() {
+		lostRequests++;
 	}
 
 	public void setLostRequests(int lostRequests) {
