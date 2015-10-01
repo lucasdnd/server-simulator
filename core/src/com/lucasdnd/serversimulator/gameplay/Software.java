@@ -103,6 +103,13 @@ public class Software {
 				}
 			}
 			
+			// If a Request was in the Server during the change to Async IO
+			for (Thread t : threads) {
+				if (t.getRequest() != null && t.getRequest().getState() == Request.WAITING_FOR_RESPONSE) {
+					t.getRequest().setState(Request.RESPONSE);
+				}
+			}
+			
 			game.getPlayer().getServer().getRequests().removeAll(serverRequestsToRemove);
 		}
 	}

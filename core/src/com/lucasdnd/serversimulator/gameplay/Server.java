@@ -43,7 +43,7 @@ public class Server {
 		for (Request r : requests) {
 			
 			// Normal request update
-			r.update(game, y);
+			r.update(game, y - height / 2f);
 			
 			// Check if the IO is done and set the appropriate Request status
 			if (r.getTicks() >= game.getPlayer().getRequestTicks() + game.getPlayer().getIoTicks()) {
@@ -58,7 +58,7 @@ public class Server {
 		float totalTime = requestTime + ioTime + responseTime;
 		float playableAreaWidth = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH;
 		width = playableAreaWidth * ioTime / totalTime;
-		height = game.getPlayer().getSoftware().getThreads().size() * ServerSimulator.BLOCK_SIZE + (ServerSimulator.BLOCK_SIZE * 2f);
+		height = game.getPlayer().getSoftware().getThreads().size() * ServerSimulator.BLOCK_SIZE * 2f + (ServerSimulator.BLOCK_SIZE * 2f);
 		
 		x = (Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH) / 2f - (width / 2f);
 		y = Gdx.graphics.getHeight() / 2f + height / 2f;

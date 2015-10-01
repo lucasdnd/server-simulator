@@ -77,10 +77,10 @@ public class Thread {
 				sr.rect(x, y, requestWidth, height);
 			} else if (request.getState() == Request.IO) {
 				sr.setColor(Color.GREEN);
-				sr.rect(requestWidth, y, ioWidth, height);				
+				sr.rect(requestWidth + ServerSimulator.BLOCK_SIZE, y, ioWidth - ServerSimulator.BLOCK_SIZE, height);				
 			} else if (request.getState() == Request.RESPONSE) {
 				sr.setColor(Color.CORAL);
-				sr.rect(requestWidth + ioWidth, y, responseWidth, height);
+				sr.rect(requestWidth + ioWidth + ServerSimulator.BLOCK_SIZE, y, responseWidth - ServerSimulator.BLOCK_SIZE, height);
 				
 			}
 			

@@ -148,9 +148,9 @@ public class Player {
 	 */
 	public void optimizeSoftware() {
 		software.optimize();
-		requestTime--;
-		ioTime -= 5;
-		responseTime--;
+		requestTime -= 2;
+		ioTime -= 6;
+		responseTime -= 2;
 	}
 	
 	public int getMoney() {
