@@ -147,7 +147,6 @@ public class SideBar {
 		font.drawWhiteFont("Response time: " + printTime(player.getResponseTime()),  x + margin, height - margin * 27, true);
 		
 		font.drawWhiteFont("Total requests: " + player.getSoftware().getTotalRequests(), x + margin, height - margin * 29, true);
-		font.drawWhiteFont("Lost: " + player.getSoftware().getLostRequests(),  x + margin * 13, height - margin * 29, true);
 		
 		// New, save, load, quit
 		newGameButton.render();

@@ -14,7 +14,7 @@ public class Market {
 	private Random r;
 	private float demand;
 	private long requestGenerationTicks = 0l;
-	private long maxRequestGenerationTicks = 60l;
+	private long maxRequestGenerationTicks = 30l;
 	
 	public Market() {
 		r = new Random();
@@ -25,9 +25,7 @@ public class Market {
 		// Demand update
 		int features = game.getPlayer().getSoftware().getFeatures();
 		demand = ((float)features + 1) * 0.1f;
-		
-		maxRequestGenerationTicks = (long)(60f / demand * 10f / 100f);
-		
+
 		// Request generation
 		requestGenerationTicks++;
 		if (requestGenerationTicks % maxRequestGenerationTicks == 0) {
