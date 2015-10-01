@@ -43,7 +43,7 @@ public class Server {
 		for (Request r : requests) {
 			
 			// Normal request update
-			r.update(game, y - height / 2f);
+			r.update(game, r.getY());
 			
 			// Check if the IO is done and set the appropriate Request status
 			if (r.getTicks() >= game.getPlayer().getRequestTicks() + game.getPlayer().getIoTicks()) {

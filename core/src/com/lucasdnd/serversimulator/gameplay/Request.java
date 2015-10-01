@@ -95,4 +95,8 @@ public class Request {
 	public void setState(int state) {
 		this.state = state;
 	}
+
+	public float getY() {
+		return y;
+	}
 }
