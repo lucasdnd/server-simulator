@@ -15,11 +15,8 @@ public class TimeController {
 	
 	private String text;
 	private FontUtils font;
-	private float x = 0f;
 	private float textWidth = 160f;
-	private final float boxHeight = 26f;
 	private final float textPaddingX = 4f;
-	private final float textPaddingY = 4f;
 	
 	public TimeController() {
 		font = new FontUtils();
@@ -33,15 +30,10 @@ public class TimeController {
 		}
 		text = (int)(((float)getHourOfDay() / (float)ONE_DAY) * 100f) + "% of day " + getDay();
 		textWidth = font.getTextWidth(text) + textPaddingX * 2f;
-		x = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH - textWidth;
 	}
 	
-	public void render(ShapeRenderer uiShapeRenderer) {
-		uiShapeRenderer.begin(ShapeType.Filled);
-		uiShapeRenderer.setColor(Color.BLACK);
-		uiShapeRenderer.rect(x, Gdx.graphics.getHeight() - boxHeight, textWidth, boxHeight);
-		uiShapeRenderer.end();
-		font.drawWhiteFont(text, x + textPaddingX, Gdx.graphics.getHeight() - textPaddingY, true);
+	public void render(ShapeRenderer uiShapeRenderer, float x, float y) {
+		font.drawWhiteFont(text, x, y, true);
 	}
 	
 	public boolean isNight() {

@@ -5,7 +5,7 @@ import com.lucasdnd.serversimulator.ServerSimulator;
 public class Player {
 	
 	// Status
-	private int money = 10000;
+	private int money = 10000000;
 	private int servicePrice = 100;
 	private int expenses;
 	

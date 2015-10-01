@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Align;
 import com.lucasdnd.serversimulator.gameplay.Market;
 import com.lucasdnd.serversimulator.gameplay.Player;
 import com.lucasdnd.serversimulator.gameplay.Request;
@@ -24,6 +25,7 @@ public class ServerSimulator extends ApplicationAdapter {
 	private FontUtils font;
 	
 	// Game objects
+	private TimeController timeController;
 	private Market market;
 	private Player player;
 
@@ -46,6 +48,7 @@ public class ServerSimulator extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(inputHandler);
 		
 		// Game Objects
+		timeController = new TimeController();
 		player = new Player();
 		market = new Market();
 
@@ -143,6 +146,15 @@ public class ServerSimulator extends ApplicationAdapter {
 			}
 			
 		});
+		
+		sideBar.getNewGameButton().setClickListener(new ButtonClickListener() {
+
+			@Override
+			public void onClick() {
+				create();
+			}
+			
+		});
 	}
 	
 	private void updateBugFixButtonState() {
@@ -170,6 +182,7 @@ public class ServerSimulator extends ApplicationAdapter {
 		sideBar.update();
 		
 		// Game objects
+		timeController.update();
 		market.update(this);
 		player.update(this);
 		
@@ -185,7 +198,16 @@ public class ServerSimulator extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		// UI render
-		sideBar.render(uiShapeRenderer);
+		font.drawWhiteFont("Request time", 20f, Gdx.graphics.getHeight() - 20f, true);
+		font.drawWhiteFont("I/O time", 0f, Gdx.graphics.getHeight() - 20f, true, Align.center, Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH);
+		if (player.getSoftware().isNonBlockingIO()) {
+			font.drawWhiteFont("(non-blocking)", 0f, Gdx.graphics.getHeight() - 40f, true, Align.center, Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH);
+		} else {
+			font.drawWhiteFont("(blocking)", 0f, Gdx.graphics.getHeight() - 40f, true, Align.center, Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH);
+		}
+		font.drawWhiteFont("Response time", Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH - 180f, Gdx.graphics.getHeight() - 20f, true);
+		sideBar.render(this, uiShapeRenderer);
+		timeController.render(uiShapeRenderer, sideBar.getX() + 20f, Gdx.graphics.getHeight() - 100f);
 		
 		// Game render
 		player.render(this);
@@ -194,7 +216,7 @@ public class ServerSimulator extends ApplicationAdapter {
 		if (debug) {
 			
 			// Threads
-			float offsetY = 0f;
+			float offsetY = 140f;
 			for (int i = 0; i < player.getSoftware().getThreads().size(); i++) {
 				com.lucasdnd.serversimulator.gameplay.Thread t = player.getSoftware().getThreads().get(i);
 				if (t.getRequest() == null) {
