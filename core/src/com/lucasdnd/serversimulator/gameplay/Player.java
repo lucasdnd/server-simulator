@@ -5,7 +5,7 @@ import com.lucasdnd.serversimulator.ServerSimulator;
 public class Player {
 	
 	// Status
-	private int money = 1000000;
+	private int money = 10000;
 	private int servicePrice = 100;
 	private int expenses;
 	
@@ -17,9 +17,6 @@ public class Player {
 	// Game objects
 	private Server server;
 	private Software software;
-	
-	// Settings and stuff
-	public static final int maxServers = 5;
 	
 	// Use some better curves here
 	private int[] featuresPrices = {5000, 7000, 10000, 13000, 17000, 21000, 25000, 30000, 35000, 40000};
@@ -144,7 +141,7 @@ public class Player {
 	}
 	
 	/**
-	 * Increases the number of threads the software can use. Also reduces the request times
+	 * Improves the request times
 	 */
 	public void optimizeSoftware() {
 		software.optimize();

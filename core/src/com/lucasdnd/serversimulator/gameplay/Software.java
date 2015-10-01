@@ -14,7 +14,7 @@ import com.lucasdnd.serversimulator.ServerSimulator;
 public class Software {
 
 	// Status
-	private int features = 0;	// Increases demand
+	private int features = 0;	// Directly influences demand
 	private ArrayList<Thread> threads;	// Can deal with more requests simultaneously
 	private int optimization = 0;	// Decreases request/io/response times
 	private int bugs = 0;	// Have a chance to happen when implementing new features. Can cause requests to fail
@@ -24,7 +24,7 @@ public class Software {
 	private int lostRequests = 0;	// Requests lost due to server busy (no threads available to work)
 	
 	public static final int maxFeatures = 10;
-	public static final int maxThreads = 30;
+	public static final int maxThreads = 10;
 	public static final int maxOptimization = 10;
 	public static final int maxBugs = 10;
 	

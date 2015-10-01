@@ -59,8 +59,8 @@ public class SideBar {
 	}
 	
 	public void update() {
-//		increasePriceButton.update();
-//		decreasePriceButton.update();
+		increasePriceButton.update();
+		decreasePriceButton.update();
 		
 		newFeaturesButton.update();
 		buyThreadButton.update();
@@ -91,8 +91,8 @@ public class SideBar {
 		font.drawWhiteFont("Expenses: " + printMoney(player.getExpenses()), x + margin * 9, height - margin, true);
 		font.drawWhiteFont("Service price: " + printMoney(player.getServicePrice()), x + margin, height - margin * 3, true);
 		
-//		increasePriceButton.render();
-//		decreasePriceButton.render();
+		increasePriceButton.render();
+		decreasePriceButton.render();
 		
 		// Software
 		drawBackgroundBar(sr, x, height - margin * 6, barWidth, barHeight - 12f);
