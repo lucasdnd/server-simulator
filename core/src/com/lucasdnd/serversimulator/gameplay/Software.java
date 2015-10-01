@@ -98,6 +98,7 @@ public class Software {
 					for (Thread t : threads) {
 						if (t.getRequest() == null) {
 							t.setRequest(r);
+							break;
 						}
 					}
 				}
