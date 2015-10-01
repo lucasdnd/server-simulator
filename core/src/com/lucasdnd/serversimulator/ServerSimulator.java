@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lucasdnd.serversimulator.gameplay.Market;
 import com.lucasdnd.serversimulator.gameplay.Player;
+import com.lucasdnd.serversimulator.gameplay.Request;
 import com.lucasdnd.serversimulator.gameplay.Software;
 import com.lucasdnd.serversimulator.ui.ButtonClickListener;
 import com.lucasdnd.serversimulator.ui.SideBar;
@@ -180,7 +181,6 @@ public class ServerSimulator extends ApplicationAdapter {
 		
 		this.update();
 		
-//		Gdx.gl.glClearColor(0.8f, 0.8f, 0.8f, 1);
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
@@ -212,6 +212,16 @@ public class ServerSimulator extends ApplicationAdapter {
 					font.drawWhiteFont("request state: " + t.getRequest().getState() + ", ticks: " + t.getRequest().getTicks(), 0f, Gdx.graphics.getHeight() - offsetY, false);
 					offsetY += 20f;
 				}
+			}
+			
+			// Server requests
+			font.drawWhiteFont("--- server requests ---", 0f, Gdx.graphics.getHeight() - offsetY, false);
+			offsetY += 20;
+			
+			// Requests
+			for (Request r : player.getServer().getRequests()) {
+				font.drawWhiteFont("request: " + r.getState() + ", ticks: " + r.getTicks(), 0f, Gdx.graphics.getHeight() - offsetY, false);
+				offsetY += 20f;
 			}
 			
 			// General stats

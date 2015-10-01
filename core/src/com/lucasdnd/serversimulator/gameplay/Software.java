@@ -49,6 +49,7 @@ public class Software {
 					
 					Server server = game.getPlayer().getServer();
 					if (nonBlockingIO) {
+						t.getRequest().setState(Request.IO);
 						server.getRequests().add(t.getRequest());
 						t.setRequest(null);
 					} else if (nonBlockingIO == false && server.isPerformingIO() == false) {
