@@ -48,14 +48,19 @@ public class Request {
 		float playableAreaWidth = Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH - width;
 		x = (playableAreaWidth * ticks) / totalTicks;
 		y = threadY;
-		if (ticks >= totalTicks) {
-			dispose = true;
-		}
 		
-		// Check it
+		// State change
 		if (state == REQUEST) {
 			if (ticks >= game.getPlayer().getRequestTicks()) {
 				state = WAITING_FOR_IO;
+			}
+		} else if (state == IO) {
+			if (ticks >= game.getPlayer().getRequestTicks() + game.getPlayer().getIoTicks()) {
+				state = WAITING_FOR_RESPONSE;
+			}
+		} else if (state == RESPONSE) {
+			if (ticks >= game.getPlayer().getTotalTicks()) {
+				dispose = true;
 			}
 		}
 	}
@@ -85,5 +90,9 @@ public class Request {
 	
 	public int getState() {
 		return state;
+	}
+	
+	public void setState(int state) {
+		this.state = state;
 	}
 }

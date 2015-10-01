@@ -156,7 +156,7 @@ public class ServerSimulator extends ApplicationAdapter {
 		
 		if (debug) {
 			if (Gdx.input.isKeyJustPressed(Keys.R)) {
-				player.createNewRequest();
+				this.create();
 			}
 		}
 	}

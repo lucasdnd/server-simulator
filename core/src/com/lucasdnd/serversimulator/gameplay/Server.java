@@ -26,7 +26,8 @@ public class Server {
 	 * Tells if this Server is performing an IO operation.
 	 * In sync IO mode, the current request will remain in the Thread until the Server is free to perform
 	 * the requered IO.
-	 * In async IO, this attribute can be ignored as these operations can be executed simultaneously.
+	 * In async IO, this attribute can be ignored as these operations can be executed simultaneously
+	 * (in the "requests" list).
 	 */
 	private boolean performingIO;
 	private LinkedList<Request> requests;
@@ -40,7 +41,14 @@ public class Server {
 		
 		// Update its requests
 		for (Request r : requests) {
+			
+			// Normal request update
 			r.update(game, y);
+			
+			// Check if the IO is done and set the appropriate Request status
+			if (r.getTicks() >= game.getPlayer().getRequestTicks() + game.getPlayer().getIoTicks()) {
+				r.setState(Request.WAITING_FOR_RESPONSE);
+			}
 		}
 		
 		// Width: the part inside the Server is the IO time
@@ -60,13 +68,17 @@ public class Server {
 		
 		drawRectFrame();
 		
-		// This rect represents the fact the server is "blocked" to processing one request a time
-		if (game.getPlayer().getSoftware().isNonBlockingIO() == false) {
-			sr.begin(ShapeType.Filled);
-			sr.setColor(Color.LIGHT_GRAY);
-			sr.rect(x + lineWeight, y - height + lineWeight, width - lineWeight, height - lineWeight);
-			sr.end();
+		for (Request r : requests) {
+			r.render();
 		}
+		
+//		// This rect represents the fact the server is "blocked" to processing one request a time
+//		if (game.getPlayer().getSoftware().isNonBlockingIO() == false) {
+//			sr.begin(ShapeType.Filled);
+//			sr.setColor(Color.LIGHT_GRAY);
+//			sr.rect(x + lineWeight, y - height + lineWeight, width - lineWeight, height - lineWeight);
+//			sr.end();
+//		}
 	}
 	
 	private void drawRectFrame() {
@@ -100,5 +112,9 @@ public class Server {
 
 	public float getY() {
 		return y;
+	}
+
+	public void setPerformingIO(boolean performingIO) {
+		this.performingIO = performingIO;
 	}
 }

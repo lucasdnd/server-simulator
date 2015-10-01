@@ -190,8 +190,8 @@ public class Player {
 		return requestTime;
 	}
 	
-	public int getRequestTicks() {
-		return requestTime * 6;
+	public long getRequestTicks() {
+		return requestTime * 6l;
 	}
 
 	public void setRequestTime(int requestTime) {
@@ -202,8 +202,8 @@ public class Player {
 		return ioTime;
 	}
 	
-	public int getIoTicks() {
-		return ioTime * 6;
+	public long getIoTicks() {
+		return ioTime * 6l;
 	}
 
 	public void setIoTime(int ioTime) {
@@ -214,11 +214,15 @@ public class Player {
 		return responseTime;
 	}
 	
-	public int getResponseTicks() {
-		return responseTime * 6;
+	public long getResponseTicks() {
+		return responseTime * 6l;
 	}
 
 	public void setResponseTime(int responseTime) {
 		this.responseTime = responseTime;
+	}
+
+	public long getTotalTicks() {
+		return getRequestTicks() + getIoTicks() + getResponseTicks();
 	}
 }
