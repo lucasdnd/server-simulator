@@ -148,6 +148,9 @@ public class Player {
 	 */
 	public void optimizeSoftware() {
 		software.optimize();
+		requestTime--;
+		ioTime -= 5;
+		responseTime--;
 	}
 	
 	public int getMoney() {
