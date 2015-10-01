@@ -59,8 +59,8 @@ public class SideBar {
 	}
 	
 	public void update() {
-		increasePriceButton.update();
-		decreasePriceButton.update();
+//		increasePriceButton.update();
+//		decreasePriceButton.update();
 		
 		newFeaturesButton.update();
 		buyThreadButton.update();
@@ -91,8 +91,8 @@ public class SideBar {
 		font.drawWhiteFont("Expenses: " + printMoney(player.getExpenses()), x + margin * 9, height - margin, true);
 		font.drawWhiteFont("Service price: " + printMoney(player.getServicePrice()), x + margin, height - margin * 3, true);
 		
-		increasePriceButton.render();
-		decreasePriceButton.render();
+//		increasePriceButton.render();
+//		decreasePriceButton.render();
 		
 		// Software
 		drawBackgroundBar(sr, x, height - margin * 6, barWidth, barHeight - 12f);
@@ -137,7 +137,7 @@ public class SideBar {
 		drawBackgroundBar(sr, x, height - margin * 18, barWidth, barHeight - 12f);
 		font.drawBlackFont("Status",  x + margin, height - margin * 17, true);
 		
-		font.drawWhiteFont("Threads: " + player.getSoftware().getFreeThreads() + "/" + (player.getSoftware().getOptimization() + 1),  x + margin, height - margin * 19, true);
+		font.drawWhiteFont("Threads: " + player.getSoftware().getFreeThreads() + "/" + (player.getSoftware().getThreads().size()),  x + margin, height - margin * 19, true);
 		font.drawWhiteFont("Bugs: " + player.getSoftware().getBugs(),  x + margin * 13, height - margin * 19, true);
 		
 		font.drawWhiteFont("Request time: " + printTime(player.getRequestTime()),  x + margin, height - margin * 21, true);

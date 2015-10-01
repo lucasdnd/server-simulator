@@ -56,6 +56,7 @@ public class Software {
 						server.setPerformingIO(true);
 						t.getRequest().setState(Request.IO);
 					}
+					
 				} else if (t.getRequest().getState() == Request.WAITING_FOR_RESPONSE && nonBlockingIO == false) {
 					
 					// Its own request is done with the IO (in sync mode)
@@ -84,18 +85,25 @@ public class Software {
 				}
 			}
 		}
-		
 		// Async IO:
 		// Check if any Server requests are done with the IO and direct them to a free thread for the Response
-		if (nonBlockingIO) {
+		else {
+			ArrayList<Request> serverRequestsToRemove = new ArrayList<Request>();
+			
 			for (Request r : game.getPlayer().getServer().getRequests()) {
-				if (r.getState() == Request.WAITING_FOR_RESPONSE) {
-					if (freeThreads.size() > 0) {
-						r.setState(Request.RESPONSE);
-						freeThreads.removeFirst().setRequest(r);
+				if (r.getState() == Request.WAITING_FOR_RESPONSE && freeThreads.size() > 0) {
+					serverRequestsToRemove.add(r);
+					r.setState(Request.RESPONSE);
+					
+					for (Thread t : threads) {
+						if (t.getRequest() == null) {
+							t.setRequest(r);
+						}
 					}
 				}
 			}
+			
+			game.getPlayer().getServer().getRequests().removeAll(serverRequestsToRemove);
 		}
 	}
 	
