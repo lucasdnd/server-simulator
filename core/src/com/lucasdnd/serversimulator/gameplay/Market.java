@@ -12,11 +12,12 @@ import com.lucasdnd.serversimulator.ServerSimulator;
 public class Market {
 	
 	private Random r;
-	private float demand;
+	private float baseDemand, demand, demandPriceInfluence;
 	private long requestGenerationTicks = 0l;
 	private long maxRequestGenerationTicks = 30l;
 	
 	public Market() {
+		baseDemand = 1f;
 		r = new Random();
 	}
 	
@@ -24,7 +25,7 @@ public class Market {
 		
 		// Demand update
 		int features = game.getPlayer().getSoftware().getFeatures();
-		demand = ((float)features + 1) * 0.1f;
+		demand = baseDemand + ((float)features + 1) * 0.5f + demandPriceInfluence;
 
 		// Request generation
 		requestGenerationTicks++;
@@ -41,6 +42,10 @@ public class Market {
 	
 	public long getMaxRequestGenerationTicks() {
 		return maxRequestGenerationTicks;
+	}
+
+	public void changeDemandPriceInfluenceBy(float f) {
+		demandPriceInfluence += f;
 	}
 	
 }

@@ -59,7 +59,7 @@ public class ServerSimulator extends ApplicationAdapter {
 
 			@Override
 			public void onClick() {
-				player.increaseServicePrice();
+				player.increaseServicePrice(market);
 			}
 			
 		});
@@ -68,7 +68,7 @@ public class ServerSimulator extends ApplicationAdapter {
 
 			@Override
 			public void onClick() {
-				player.decreaseServicePrice();
+				player.decreaseServicePrice(market);
 			}
 			
 		});

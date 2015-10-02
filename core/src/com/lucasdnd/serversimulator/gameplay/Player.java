@@ -5,7 +5,7 @@ import com.lucasdnd.serversimulator.ServerSimulator;
 public class Player {
 	
 	// Status
-	private int money = 10000000;
+	private int money = 10000;
 	private int servicePrice = 100;
 	private int expenses;
 	
@@ -26,7 +26,7 @@ public class Player {
 	private int asyncIOPrice = 50000;
 	
 	private final int minServicePrice = 50;
-	private final int maxServicePrice = 1000;
+	private final int maxServicePrice = 500;
 	
 	public Player() {
 		this.software = new Software();
@@ -43,17 +43,26 @@ public class Player {
 		software.render(game);
 	}
 	
-	public void increaseServicePrice() {
+	public void increaseServicePrice(Market market) {
+		float originalServicePrice = servicePrice;
 		servicePrice += 50;
 		if (servicePrice >= maxServicePrice) {
 			servicePrice = maxServicePrice;
 		}
+		
+		if (originalServicePrice != servicePrice) {
+			market.changeDemandPriceInfluenceBy(-0.25f);
+		}
 	}
 	
-	public void decreaseServicePrice() {
+	public void decreaseServicePrice(Market market) {
+		float originalServicePrice = servicePrice;
 		servicePrice -= 50;
 		if (servicePrice <= minServicePrice) {
 			servicePrice = minServicePrice;
+		}
+		if (originalServicePrice != servicePrice) {
+			market.changeDemandPriceInfluenceBy(0.25f);
 		}
 	}
 	

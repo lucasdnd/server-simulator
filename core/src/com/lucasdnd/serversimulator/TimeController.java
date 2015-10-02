@@ -1,10 +1,6 @@
 package com.lucasdnd.serversimulator;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.lucasdnd.serversimulator.ui.SideBar;
 
 public class TimeController {
 	private long ticks;
