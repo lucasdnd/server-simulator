@@ -32,6 +32,12 @@ public class Software {
 		addNewThread();
 	}
 	
+	/**
+	 * This abstraction should be simpler... probably just a LinkedList and a better state control.
+	 * That would remove the Server class, etc.
+	 * 
+	 * @param game
+	 */
 	public void update(ServerSimulator game) {
 		
 		LinkedList<Thread> freeThreads = new LinkedList<Thread>();

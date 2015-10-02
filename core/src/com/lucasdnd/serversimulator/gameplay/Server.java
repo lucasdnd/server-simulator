@@ -71,14 +71,6 @@ public class Server {
 		for (Request r : requests) {
 			r.render();
 		}
-		
-//		// This rect represents the fact the server is "blocked" to processing one request a time
-//		if (game.getPlayer().getSoftware().isNonBlockingIO() == false) {
-//			sr.begin(ShapeType.Filled);
-//			sr.setColor(Color.LIGHT_GRAY);
-//			sr.rect(x + lineWeight, y - height + lineWeight, width - lineWeight, height - lineWeight);
-//			sr.end();
-//		}
 	}
 	
 	private void drawRectFrame() {
