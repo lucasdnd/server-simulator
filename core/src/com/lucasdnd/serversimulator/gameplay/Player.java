@@ -23,7 +23,7 @@ public class Player {
 	private int[] threadPrices = {50, 70, 10, 130, 170, 210, 250, 300, 350, 400};
 	private int[] optimizationPrices = {20, 40, 60, 80, 100, 120, 140, 160, 180, 200};
 	private int[] bugFixPrices = {30, 40, 60, 90, 130, 180, 240, 310, 390, 480};
-	private int asyncIOPrice = 2500;
+	private int asyncIOPrice = 200;
 	
 	private final int minServicePrice = 5;
 	private final int maxServicePrice = 50;
