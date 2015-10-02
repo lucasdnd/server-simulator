@@ -58,17 +58,17 @@ public class SideBar {
 		quitButton = new Button("Quit", this.x + margin * 15, margin * 4);
 	}
 	
-	public void update() {
-		increasePriceButton.update();
-		decreasePriceButton.update();
+	public void update(ServerSimulator game) {
+		increasePriceButton.update(game);
+		decreasePriceButton.update(game);
 		
-		newFeaturesButton.update();
-		buyThreadButton.update();
-		optimizeButton.update();
-		bugFixButton.update();
-		asyncIOButton.update();
+		newFeaturesButton.update(game);
+		buyThreadButton.update(game);
+		optimizeButton.update(game);
+		bugFixButton.update(game);
+		asyncIOButton.update(game);
 		
-		newGameButton.update();
+		newGameButton.update(game);
 //		saveGameButton.update();
 //		loadGameButton.update();
 //		quitButton.update();
@@ -167,11 +167,8 @@ public class SideBar {
 	}
 	
 	private String printMoney(int money) {
-		NumberFormat nf = NumberFormat.getCurrencyInstance();
-		DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) nf).getDecimalFormatSymbols();
-		decimalFormatSymbols.setCurrencySymbol("");
-		((DecimalFormat) nf).setDecimalFormatSymbols(decimalFormatSymbols);
-		return "$ " + nf.format((float)money / 100).trim();
+		String m = "" + (float)money / 100;
+		return "$ " + m.trim() + "0";
 	}
 	
 	private String printTime(int time) {

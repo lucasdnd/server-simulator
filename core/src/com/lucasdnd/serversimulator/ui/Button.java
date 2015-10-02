@@ -53,13 +53,13 @@ public class Button {
 		this.textPaddingY = textPaddingY;
 	}
 	
-	public void update() {
+	public void update(ServerSimulator game) {
 		if (enabled) {
 			int mouseX = Gdx.input.getX();
 			int mouseY = (int)(Gdx.graphics.getHeight() - Gdx.input.getY() + height);
 			mouseOver = ((mouseX > x && mouseX < x + width) && (mouseY > y && mouseY < y + height));
 			
-			if (mouseOver && ((ServerSimulator)Gdx.app.getApplicationListener()).getInputHandler().leftMouseJustClicked) {
+			if (mouseOver && game.getInputHandler().leftMouseJustClicked) {
 				if (clickListener != null) {
 					clickListener.onClick();
 				}

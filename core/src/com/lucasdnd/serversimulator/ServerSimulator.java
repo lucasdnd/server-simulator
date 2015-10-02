@@ -179,7 +179,7 @@ public class ServerSimulator extends ApplicationAdapter {
 		handleInput();
 		
 		// UI update
-		sideBar.update();
+		sideBar.update(this);
 		
 		// Game objects
 		timeController.update();
