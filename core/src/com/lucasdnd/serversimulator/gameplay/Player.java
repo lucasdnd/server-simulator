@@ -5,8 +5,8 @@ import com.lucasdnd.serversimulator.ServerSimulator;
 public class Player {
 	
 	// Status
-	private int money = 10000;
-	private int servicePrice = 100;
+	private int money = 100;
+	private int servicePrice = 10;
 	private int expenses;
 	
 	// Times are in 1/10s of seconds
@@ -19,14 +19,14 @@ public class Player {
 	private Software software;
 	
 	// Use some better curves here
-	private int[] featuresPrices = {5000, 7000, 10000, 13000, 17000, 21000, 25000, 30000, 35000, 40000};
-	private int[] threadPrices = {5000, 7000, 10000, 13000, 17000, 21000, 25000, 30000, 35000, 40000};
-	private int[] optimizationPrices = {2000, 4000, 6000, 8000, 10000, 12000, 14000, 16000, 18000, 20000};
-	private int[] bugFixPrices = {3000, 4000, 6000, 9000, 13000, 18000, 24000, 31000, 39000, 48000};
-	private int asyncIOPrice = 50000;
+	private int[] featuresPrices = {50, 70, 100, 130, 170, 210, 250, 300, 350, 400};
+	private int[] threadPrices = {50, 70, 10, 130, 170, 210, 250, 300, 350, 400};
+	private int[] optimizationPrices = {20, 40, 60, 80, 100, 120, 140, 160, 180, 200};
+	private int[] bugFixPrices = {30, 40, 60, 90, 130, 180, 240, 310, 390, 480};
+	private int asyncIOPrice = 2500;
 	
-	private final int minServicePrice = 50;
-	private final int maxServicePrice = 500;
+	private final int minServicePrice = 5;
+	private final int maxServicePrice = 50;
 	
 	public Player() {
 		this.software = new Software();
@@ -45,7 +45,7 @@ public class Player {
 	
 	public void increaseServicePrice(Market market) {
 		float originalServicePrice = servicePrice;
-		servicePrice += 50;
+		servicePrice += 5;
 		if (servicePrice >= maxServicePrice) {
 			servicePrice = maxServicePrice;
 		}
@@ -57,7 +57,7 @@ public class Player {
 	
 	public void decreaseServicePrice(Market market) {
 		float originalServicePrice = servicePrice;
-		servicePrice -= 50;
+		servicePrice -= 5;
 		if (servicePrice <= minServicePrice) {
 			servicePrice = minServicePrice;
 		}

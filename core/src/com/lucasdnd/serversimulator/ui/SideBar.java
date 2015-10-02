@@ -167,8 +167,7 @@ public class SideBar {
 	}
 	
 	private String printMoney(int money) {
-		String m = "" + (float)money / 100;
-		return "$ " + m.trim() + "0";
+		return "$ " + money;
 	}
 	
 	private String printTime(int time) {
