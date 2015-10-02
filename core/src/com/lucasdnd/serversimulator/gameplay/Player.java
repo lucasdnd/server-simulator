@@ -144,9 +144,6 @@ public class Player {
 				return;
 			}
 		}
-		
-		// If none are found, increment the lost requests
-		software.incrementLostRequests();
 	}
 	
 	/**

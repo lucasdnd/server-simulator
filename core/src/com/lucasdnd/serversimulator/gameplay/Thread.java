@@ -46,6 +46,7 @@ public class Thread {
 					
 					// $$$
 					game.getPlayer().earnMoney(request.getPriceToPay());
+					game.getPlayer().getSoftware().incrementTotalRequests();
 					request = null;
 				}
 			}

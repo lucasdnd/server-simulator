@@ -21,7 +21,6 @@ public class Software {
 	private boolean nonBlockingIO = false;	// Sync or async IO
 	
 	private int totalRequests = 0;	// Total number of requests served
-	private int lostRequests = 0;	// Requests lost due to server busy (no threads available to work)
 	
 	public static final int maxFeatures = 10;
 	public static final int maxThreads = 10;
@@ -183,16 +182,9 @@ public class Software {
 	public void setTotalRequests(int totalRequests) {
 		this.totalRequests = totalRequests;
 	}
-
-	public int getLostRequests() {
-		return lostRequests;
-	}
 	
-	public void incrementLostRequests() {
-		lostRequests++;
+	public void incrementTotalRequests() {
+		totalRequests++;
 	}
 
-	public void setLostRequests(int lostRequests) {
-		this.lostRequests = lostRequests;
-	}
 }
