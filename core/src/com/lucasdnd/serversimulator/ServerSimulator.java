@@ -18,7 +18,7 @@ public class ServerSimulator extends ApplicationAdapter {
 	// General stuff
 	public static final String GAME_NAME = "Server Simulator";
 	public static final String VERSION = "v0.1.0";
-	private boolean debug = true;
+	private boolean debug = false;
 	
 	// Rendering, font
 	public static final float BLOCK_SIZE = 8f;
@@ -198,14 +198,14 @@ public class ServerSimulator extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		// UI render
-		font.drawWhiteFont("Request time", 20f, Gdx.graphics.getHeight() - 20f, true);
-		font.drawWhiteFont("I/O time", 0f, Gdx.graphics.getHeight() - 20f, true, Align.center, Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH);
+		font.drawWhiteFont("Request", 20f, Gdx.graphics.getHeight() - 20f, true);
+		font.drawWhiteFont("I/O", 0f, Gdx.graphics.getHeight() - 20f, true, Align.center, Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH);
 		if (player.getSoftware().isNonBlockingIO()) {
 			font.drawWhiteFont("(non-blocking)", 0f, Gdx.graphics.getHeight() - 40f, true, Align.center, Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH);
 		} else {
 			font.drawWhiteFont("(blocking)", 0f, Gdx.graphics.getHeight() - 40f, true, Align.center, Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH);
 		}
-		font.drawWhiteFont("Response time", Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH - 180f, Gdx.graphics.getHeight() - 20f, true);
+		font.drawWhiteFont("Response", -20f, Gdx.graphics.getHeight() - 20f, true, Align.right, Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH);
 		sideBar.render(this, uiShapeRenderer);
 		timeController.render(uiShapeRenderer, sideBar.getX() + 20f, Gdx.graphics.getHeight() - 100f);
 		
