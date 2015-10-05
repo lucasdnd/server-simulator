@@ -10,7 +10,8 @@ import com.lucasdnd.serversimulator.ServerSimulator;
 import com.lucasdnd.serversimulator.ui.SideBar;
 
 /**
- * This is just the visual representation of the I/O area on the screen.
+ * This is just the visual representation of the I/O area on the screen. It also takes care
+ * of the Requests that are currently in there.
  * 
  * @author lucasdnd
  *
