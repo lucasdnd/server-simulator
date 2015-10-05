@@ -13,6 +13,12 @@ import com.lucasdnd.serversimulator.gameplay.Software;
 import com.lucasdnd.serversimulator.ui.ButtonClickListener;
 import com.lucasdnd.serversimulator.ui.SideBar;
 
+/**
+ * The main game class. The game starts at "create()", is run at "update()" and rendered at "render()".
+ * 
+ * @author lucasdnd
+ *
+ */
 public class ServerSimulator extends ApplicationAdapter {
 
 	// General stuff
@@ -139,10 +145,10 @@ public class ServerSimulator extends ApplicationAdapter {
 			@Override
 			public void onClick() {
 				if (player.spendMoney(player.getAsyncIOPrice())) {
-					player.getSoftware().setNonBlockingIO(true);
+					player.getSoftware().setAsyncIO(true);
 				}
 				
-				sideBar.getAsyncIOButton().setEnabled(player.getSoftware().isNonBlockingIO() == false);
+				sideBar.getAsyncIOButton().setEnabled(player.getSoftware().isAsyncIO() == false);
 			}
 			
 		});
@@ -174,6 +180,9 @@ public class ServerSimulator extends ApplicationAdapter {
 		}
 	}
 	
+	/**
+	 * Separation of render and business logic
+	 */
 	public void update() {
 		
 		handleInput();
@@ -189,6 +198,9 @@ public class ServerSimulator extends ApplicationAdapter {
 		inputHandler.refreshMouseClicks();
 	}
 
+	/**
+	 * Runs 60x per second
+	 */
 	@Override
 	public void render() {
 		
@@ -200,7 +212,7 @@ public class ServerSimulator extends ApplicationAdapter {
 		// UI render
 		font.drawWhiteFont("Request", 20f, Gdx.graphics.getHeight() - 20f, true);
 		font.drawWhiteFont("I/O", 0f, Gdx.graphics.getHeight() - 20f, true, Align.center, Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH);
-		if (player.getSoftware().isNonBlockingIO()) {
+		if (player.getSoftware().isAsyncIO()) {
 			font.drawWhiteFont("(non-blocking)", 0f, Gdx.graphics.getHeight() - 40f, true, Align.center, Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH);
 		} else {
 			font.drawWhiteFont("(blocking)", 0f, Gdx.graphics.getHeight() - 40f, true, Align.center, Gdx.graphics.getWidth() - SideBar.SIDEBAR_WIDTH);

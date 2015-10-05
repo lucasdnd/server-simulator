@@ -3,6 +3,12 @@ package com.lucasdnd.serversimulator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
+/**
+ * Resource manager. Used to load fonts from the disk.
+ * 
+ * @author lucasdnd
+ *
+ */
 public class Resources {
 	private static Resources instance;
 	public static Resources get() {

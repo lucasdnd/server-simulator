@@ -7,6 +7,14 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.serversimulator.ServerSimulator;
 import com.lucasdnd.serversimulator.ui.SideBar;
 
+/**
+ * The Request. It has an amount of "ticks" that define where in the process the Request currently is.
+ * Ticks get increased by 60 every second, and its state and position on the screen is updated according
+ * to this value.
+ * 
+ * @author lucasdnd
+ *
+ */
 public class Request {
 
 	private float x, y;

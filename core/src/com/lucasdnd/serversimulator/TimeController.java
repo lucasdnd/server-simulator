@@ -2,6 +2,12 @@ package com.lucasdnd.serversimulator;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+/**
+ * Controls the passing of time.
+ * 
+ * @author lucasdnd
+ *
+ */
 public class TimeController {
 	private long ticks;
 	public final static long FPS = 60;

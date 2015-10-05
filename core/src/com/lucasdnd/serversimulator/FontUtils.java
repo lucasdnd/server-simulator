@@ -2,6 +2,12 @@ package com.lucasdnd.serversimulator;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ * Use this class just to make font draw calls simpler. It supports text alignment and drop shadow.
+ * 
+ * @author lucasdnd
+ *
+ */
 public class FontUtils {
 	
 	private SpriteBatch fontBatch;

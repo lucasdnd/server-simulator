@@ -1,9 +1,5 @@
 package com.lucasdnd.serversimulator.ui;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -13,6 +9,12 @@ import com.lucasdnd.serversimulator.ServerSimulator;
 import com.lucasdnd.serversimulator.gameplay.Player;
 import com.lucasdnd.serversimulator.gameplay.Software;
 
+/**
+ * The sidebar, with all the buttons and info.
+ * 
+ * @author lucasdnd
+ *
+ */
 public class SideBar {
 	private int x, y;
 	private final float margin = 20f;
@@ -26,7 +28,7 @@ public class SideBar {
 	// Buttons
 	private Button increasePriceButton, decreasePriceButton;
 	private Button newFeaturesButton, optimizeButton, buyThreadButton, bugFixButton, asyncIOButton;
-	private Button newGameButton, saveGameButton, loadGameButton, quitButton;
+	private Button newGameButton;
 	
 	private FontUtils font;
 	
@@ -53,9 +55,6 @@ public class SideBar {
 		asyncIOButton =  new Button("+", this.x + margin, height - margin * 17, buttonHeight, buttonTextPaddingY);
 		
 		newGameButton = new Button("New Game", this.x + margin, margin * 4);
-		saveGameButton = new Button("Save", this.x + margin * 5 + 6f, margin * 4);
-		loadGameButton = new Button("Load", this.x + margin * 10 + 4f, margin * 4);
-		quitButton = new Button("Quit", this.x + margin * 15, margin * 4);
 	}
 	
 	public void update(ServerSimulator game) {
@@ -69,9 +68,6 @@ public class SideBar {
 		asyncIOButton.update(game);
 		
 		newGameButton.update(game);
-//		saveGameButton.update();
-//		loadGameButton.update();
-//		quitButton.update();
 	}
 	
 	public void render(ServerSimulator game, ShapeRenderer sr) {
@@ -129,7 +125,7 @@ public class SideBar {
 		}
 		
 		asyncIOButton.render();
-		if (player.getSoftware().isNonBlockingIO()) {
+		if (player.getSoftware().isAsyncIO()) {
 			font.drawWhiteFont("Already async IO",  x + margin * 4, height - margin * 17, true);
 		} else {
 			font.drawWhiteFont(printMoney(player.getAsyncIOPrice()) + ": Async I/O",  x + margin * 4, height - margin * 17, true);
@@ -150,9 +146,6 @@ public class SideBar {
 		
 		// New, save, load, quit
 		newGameButton.render();
-//		saveGameButton.render();
-//		loadGameButton.render();
-//		quitButton.render();
 		
 		// Game name and version
 		font.drawWhiteFont(ServerSimulator.GAME_NAME, x + margin,                  margin * 1.5f, true);
@@ -178,20 +171,8 @@ public class SideBar {
 		return x;
 	}
 
-	public Button getSaveGameButton() {
-		return saveGameButton;
-	}
-
 	public Button getNewGameButton() {
 		return newGameButton;
-	}
-
-	public Button getLoadGameButton() {
-		return loadGameButton;
-	}
-
-	public Button getQuitButton() {
-		return quitButton;
 	}
 
 	public Button getNewFeaturesButton() {

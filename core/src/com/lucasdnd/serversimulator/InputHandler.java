@@ -3,6 +3,12 @@ package com.lucasdnd.serversimulator;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
+/**
+ * Controls.
+ * 
+ * @author lucasdnd
+ *
+ */
 public class InputHandler implements InputProcessor {
 	
 	public boolean leftMouseDown, leftMouseJustClicked, rightMouseDown, rightMouseJustClicked;

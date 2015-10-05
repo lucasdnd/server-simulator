@@ -9,6 +9,13 @@ import com.lucasdnd.serversimulator.FontUtils;
 import com.lucasdnd.serversimulator.Resources;
 import com.lucasdnd.serversimulator.ServerSimulator;
 
+/**
+ * Basically: a rectangle that detects when it's hovered or clicked. Its size is adjusted according to its
+ * text.
+ * 
+ * @author lucasdnd
+ *
+ */
 public class Button {
 	
 	protected float x, y, width;

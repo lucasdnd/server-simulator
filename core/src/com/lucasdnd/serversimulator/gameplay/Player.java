@@ -2,6 +2,13 @@ package com.lucasdnd.serversimulator.gameplay;
 
 import com.lucasdnd.serversimulator.ServerSimulator;
 
+/**
+ * Think of it as the "business". It contains all the main information about the stuff the player currently has.
+ * It also has the Software and the Server. They get updated from here.
+ * 
+ * @author lucasdnd
+ *
+ */
 public class Player {
 	
 	// Status
@@ -121,7 +128,7 @@ public class Player {
 		return threadPrices[software.getThreads().size() - 1];
 	}
 	public int getAsyncIOPrice() {
-		if (software.isNonBlockingIO()) {
+		if (software.isAsyncIO()) {
 			return 0;
 		}
 		return asyncIOPrice;

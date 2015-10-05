@@ -10,7 +10,8 @@ import com.lucasdnd.serversimulator.ServerSimulator;
 import com.lucasdnd.serversimulator.ui.SideBar;
 
 /**
- * This is just the visual representation of the I/O area on the screen
+ * This is just the visual representation of the I/O area on the screen.
+ * 
  * @author lucasdnd
  *
  */
@@ -52,6 +53,7 @@ public class Server {
 		}
 		
 		// Width: the part inside the Server is the IO time
+		// Should this code be in the render() area? Since it has to do with the drawing...
 		float requestTime = game.getPlayer().getRequestTime();
 		float ioTime = game.getPlayer().getIoTime();
 		float responseTime = game.getPlayer().getResponseTime();

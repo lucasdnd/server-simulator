@@ -9,6 +9,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.lucasdnd.serversimulator.ServerSimulator;
 import com.lucasdnd.serversimulator.ui.SideBar;
 
+/**
+ * The "worker". It will receive a Request and update it. 
+ * 
+ * @author lucasdnd
+ *
+ */
 public class Thread {
 	
 	private int id;

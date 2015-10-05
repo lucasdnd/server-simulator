@@ -7,7 +7,11 @@ import java.util.Random;
 import com.lucasdnd.serversimulator.ServerSimulator;
 
 /**
- * The core mechanics
+ * The core mechanics. Updates threads, request routing, etc.
+ * 
+ * This abstraction should be simpler... probably just a LinkedList and a better state control.
+ * My goal is to eventually remove the Server class.
+ * 
  * @author lucasdnd
  *
  */
@@ -18,7 +22,7 @@ public class Software {
 	private ArrayList<Thread> threads;	// Can deal with more requests simultaneously
 	private int optimization = 0;	// Decreases request/io/response times
 	private int bugs = 0;	// Have a chance to happen when implementing new features. Can cause requests to fail
-	private boolean nonBlockingIO = false;	// Sync or async IO
+	private boolean asyncIO = false;	// Sync or async IO
 	
 	private int totalRequests = 0;	// Total number of requests served
 	
@@ -32,61 +36,53 @@ public class Software {
 		addNewThread();
 	}
 	
-	/**
-	 * This abstraction should be simpler... probably just a LinkedList and a better state control.
-	 * That would remove the Server class, etc.
-	 * 
-	 * @param game
-	 */
 	public void update(ServerSimulator game) {
 		
 		LinkedList<Thread> freeThreads = new LinkedList<Thread>();
 		
-		for (Thread t : threads) {
+		for (Thread thread : threads) {
 			
 			// Normal update
-			t.update(game, game.getPlayer().getServer().getY());
+			thread.update(game, game.getPlayer().getServer().getY());
 			
-			if (t.getRequest() != null) {
+			if (thread.getRequest() != null) {
 				
 				// IO routing
-				if (t.getRequest().getState() == Request.WAITING_FOR_IO) {
+				if (thread.getRequest().getState() == Request.WAITING_FOR_IO) {
 					
 					Server server = game.getPlayer().getServer();
-					if (nonBlockingIO) {
-						t.getRequest().setState(Request.IO);
-						server.getRequests().add(t.getRequest());
-						t.setRequest(null);
-					} else if (nonBlockingIO == false && server.isPerformingIO() == false) {
+					if (asyncIO) {
+						// Send the request to the server immediately
+						thread.getRequest().setState(Request.IO);
+						server.getRequests().add(thread.getRequest());
+						thread.setRequest(null);
+					} else if (asyncIO == false && server.isPerformingIO() == false) {
+						// Server is free to get the Request
 						server.setPerformingIO(true);
-						t.getRequest().setState(Request.IO);
+						thread.getRequest().setState(Request.IO);
 					}
 					
-				} else if (t.getRequest().getState() == Request.WAITING_FOR_RESPONSE && nonBlockingIO == false) {
+				} else if (thread.getRequest().getState() == Request.WAITING_FOR_RESPONSE && asyncIO == false) {
 					
-					// Its own request is done with the IO (in sync mode)
-					t.getRequest().setState(Request.RESPONSE);
+					// In sync mode, when the request is done with the I/O, go to Response
+					thread.getRequest().setState(Request.RESPONSE);
 					game.getPlayer().getServer().setPerformingIO(false);
 					
 				}
 			}
 			
 			// Get the free threads so we can use them later
-			if (t.getRequest() == null) {
-				freeThreads.add(t);
+			if (thread.getRequest() == null) {
+				freeThreads.add(thread);
 			}
 		}
 		
 		// Sync IO, with another free thread:
-		if (nonBlockingIO == false) {
-			for (Thread t : threads) {
-				if (t.getRequest() != null) {
-					if (t.getRequest().getState() == Request.WAITING_FOR_RESPONSE) {
-						if (freeThreads.size() > 0) {
-							freeThreads.removeFirst().setRequest(t.getRequest());
-							game.getPlayer().getServer().setPerformingIO(false); // Free up the server to continue working on another request
-						}
-					}
+		if (asyncIO == false) {
+			for (Thread thread : threads) {
+				if (freeThreads.size() > 0 && thread.getRequest() != null && thread.getRequest().getState() == Request.WAITING_FOR_RESPONSE) {
+					freeThreads.removeFirst().setRequest(thread.getRequest());
+					game.getPlayer().getServer().setPerformingIO(false); // Free up the server to continue working on another request
 				}
 			}
 		}
@@ -95,24 +91,24 @@ public class Software {
 		else {
 			ArrayList<Request> serverRequestsToRemove = new ArrayList<Request>();
 			
-			for (Request r : game.getPlayer().getServer().getRequests()) {
-				if (r.getState() == Request.WAITING_FOR_RESPONSE && freeThreads.size() > 0) {
-					serverRequestsToRemove.add(r);
-					r.setState(Request.RESPONSE);
+			for (Request request : game.getPlayer().getServer().getRequests()) {
+				if (request.getState() == Request.WAITING_FOR_RESPONSE && freeThreads.size() > 0) {
+					serverRequestsToRemove.add(request);
+					request.setState(Request.RESPONSE);
 					
 					for (Thread t : threads) {
 						if (t.getRequest() == null) {
-							t.setRequest(r);
+							t.setRequest(request);
 							break;
 						}
 					}
 				}
 			}
 			
-			// If a Request was in the Server during the change to Async IO
-			for (Thread t : threads) {
-				if (t.getRequest() != null && t.getRequest().getState() == Request.WAITING_FOR_RESPONSE) {
-					t.getRequest().setState(Request.RESPONSE);
+			// If a Request was waiting in the Server during the change to Async IO, get it going
+			for (Thread thread : threads) {
+				if (thread.getRequest() != null && thread.getRequest().getState() == Request.WAITING_FOR_RESPONSE) {
+					thread.getRequest().setState(Request.RESPONSE);
 				}
 			}
 			
@@ -173,12 +169,12 @@ public class Software {
 		return bugs;
 	}
 
-	public boolean isNonBlockingIO() {
-		return nonBlockingIO;
+	public boolean isAsyncIO() {
+		return asyncIO;
 	}
 
-	public void setNonBlockingIO(boolean nonBlockingIO) {
-		this.nonBlockingIO = nonBlockingIO;
+	public void setAsyncIO(boolean asyncIO) {
+		this.asyncIO = asyncIO;
 	}
 
 	public int getTotalRequests() {

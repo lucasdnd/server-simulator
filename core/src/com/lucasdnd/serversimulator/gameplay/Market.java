@@ -5,7 +5,9 @@ import java.util.Random;
 import com.lucasdnd.serversimulator.ServerSimulator;
 
 /**
- * Takes care of when Requests are created, based on the demand
+ * Takes care of when Requests are created, based on the demand.
+ * The higher the demand, the faster new requests will show up.
+ * 
  * @author lucasdnd
  *
  */

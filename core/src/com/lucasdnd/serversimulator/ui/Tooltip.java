@@ -7,6 +7,13 @@ import com.badlogic.gdx.utils.Align;
 import com.lucasdnd.serversimulator.FontUtils;
 import com.lucasdnd.serversimulator.Resources;
 
+/**
+ * Shows a rectangle somewhere on the screen with a text. Very similar to Button, but I chose not to extend
+ * a common class. 
+ * 
+ * @author lucasdnd
+ *
+ */
 public class Tooltip {
 	private float x, y;
 	private final float height = 32f;
