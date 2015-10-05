@@ -31,7 +31,8 @@ public class Server {
 	 * (in the "requests" list).
 	 */
 	private boolean performingIO;
-	private LinkedList<Request> requests;
+	
+	private LinkedList<Request> requests; // These are all requests in the I/O state.
 	
 	public Server(Software software) {
 		sr = new ShapeRenderer();
@@ -41,14 +42,14 @@ public class Server {
 	public void update(ServerSimulator game) {
 		
 		// Update its requests
-		for (Request r : requests) {
+		for (Request request : requests) {
 			
-			// Normal request update
-			r.update(game, r.getY());
+			// Normal request update (ticks++, screen position)
+			request.update(game, request.getY());
 			
 			// Check if the IO is done and set the appropriate Request status
-			if (r.getTicks() >= game.getPlayer().getRequestTicks() + game.getPlayer().getIoTicks()) {
-				r.setState(Request.WAITING_FOR_RESPONSE);
+			if (request.getTicks() >= game.getPlayer().getRequestTicks() + game.getPlayer().getIoTicks()) {
+				request.setState(Request.WAITING_FOR_RESPONSE);
 			}
 		}
 		
