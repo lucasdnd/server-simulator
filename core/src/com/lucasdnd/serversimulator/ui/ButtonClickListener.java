@@ -8,7 +8,7 @@ package com.lucasdnd.serversimulator.ui;
  * 		public void onClick() {
  * 			// Button action here
  * 		}
- * }
+ * });
  * 
  * @author lucasdnd
  *
