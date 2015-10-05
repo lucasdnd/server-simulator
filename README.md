@@ -1,5 +1,6 @@
 # server-simulator
-Something
+
+Server Simulator
 
 ### Dev build
 
