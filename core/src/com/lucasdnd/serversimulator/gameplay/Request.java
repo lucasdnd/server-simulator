@@ -9,7 +9,7 @@ import com.lucasdnd.serversimulator.ui.SideBar;
 
 /**
  * The Request. It has an amount of "ticks" that define where in the process the Request currently is.
- * Ticks get increased by 60 every second, and its state and position on the screen is updated according
+ * Ticks get increased by 60 every second, and its state and position on the screen are updated according
  * to this value.
  * 
  * @author lucasdnd
