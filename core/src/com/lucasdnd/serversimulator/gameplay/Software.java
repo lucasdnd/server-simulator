@@ -77,18 +77,10 @@ public class Software {
 			}
 		}
 		
-		// Sync IO, with another free thread:
-		if (asyncIO == false) {
-			for (Thread thread : threads) {
-				if (freeThreads.size() > 0 && thread.getRequest() != null && thread.getRequest().getState() == Request.WAITING_FOR_RESPONSE) {
-					freeThreads.removeFirst().setRequest(thread.getRequest());
-					game.getPlayer().getServer().setPerformingIO(false); // Free up the server to continue working on another request
-				}
-			}
-		}
 		// Async IO:
 		// Check if any Server requests are done with the IO and direct them to a free thread for the Response
-		else {
+		if (asyncIO) {
+			
 			ArrayList<Request> serverRequestsToRemove = new ArrayList<Request>();
 			
 			for (Request request : game.getPlayer().getServer().getRequests()) {
