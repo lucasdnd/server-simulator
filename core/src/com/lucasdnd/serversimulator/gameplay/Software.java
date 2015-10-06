@@ -83,16 +83,23 @@ public class Software {
 			
 			ArrayList<Request> serverRequestsToRemove = new ArrayList<Request>();
 			
-			for (Request request : game.getPlayer().getServer().getRequests()) {
-				if (request.getState() == Request.WAITING_FOR_RESPONSE && freeThreads.size() > 0) {
-					serverRequestsToRemove.add(request);
-					request.setState(Request.RESPONSE);
+			for (Request serverRequest : game.getPlayer().getServer().getRequests()) {
+				if (serverRequest.getState() == Request.WAITING_FOR_RESPONSE && freeThreads.size() > 0) {
 					
-					for (Thread t : threads) {
-						if (t.getRequest() == null) {
-							t.setRequest(request);
+					serverRequestsToRemove.add(serverRequest);
+					serverRequest.setState(Request.RESPONSE);
+					
+					boolean foundFreeThread = false;
+					for (Thread freeThread : freeThreads) {
+						if (freeThread.getRequest() == null) {
+							freeThread.setRequest(serverRequest);
+							foundFreeThread = true;
 							break;
 						}
+					}
+					
+					if (foundFreeThread) {
+						break;
 					}
 				}
 			}
